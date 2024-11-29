@@ -47,7 +47,7 @@ ${commands.join('\n')}
 ╰─━━━━━━━━━╾─╯
 Chat -help [name] 
 to see command details.
-━━━━━━━━━━━━━━`;
+━━━━━━━━━━━━━━\n\n━━━━━━━━━━━━━━━━━━\nThis Ai is made by ICT students in Pau Excellencia Global Academy Foundation, Inc.(Pegafi)\n━━━━━━━━━━━━━━━━━━`;
 
     sendMessage(senderId, { text: helpMessage }, pageAccessToken);
   }
