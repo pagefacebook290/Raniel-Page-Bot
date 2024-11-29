@@ -12,8 +12,19 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { result } } = await axios.get(`https://chatgpt-api-conversational.onrender.com/alice?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
-      sendMessage(senderId, { text: result }, pageAccessToken);
+      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/gpt-4o?q=${encodeURIComponent(prompt)}&uid=${senderId}`);
+
+      const parts = [];
+
+      for (let i = 0; i < response.length; i += 1999) {
+        parts.push(response.substring(i, i + 1999));
+      }
+
+      // send all msg parts
+      for (const part of parts) {
+        await sendMessage(senderId, { text: part }, pageAccessToken);
+      }
+
     } catch {
       sendMessage(senderId, { text: 'There was an error generating the content. Please try again later.' }, pageAccessToken);
     }
