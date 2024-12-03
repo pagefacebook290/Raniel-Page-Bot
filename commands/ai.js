@@ -4,12 +4,12 @@ const { sendMessage } = require('../handles/sendMessage');
 module.exports = {
   name: 'ai',
   description: 'Xao Ai',
-  usage: 'aiv2 [your Question or Message]',
+  usage: 'ai [your Question or Message]',
   author: 'Gelie',
 
   async execute(senderId, args, pageAccessToken) {
     const prompt = args.join(' ');
-    if (!prompt) return sendMessage(senderId, { text: "Usage: aiv2 <question>" }, pageAccessToken);
+    if (!prompt) return sendMessage(senderId, { text: "Usage: ai <question>" }, pageAccessToken);
 
     try {
       const { data: { result } } = await axios.get(`https://api.kenliejugarap.com/llama/?question=Hello${encodeURIComponent(prompt)}&UID=${senderId}`);
