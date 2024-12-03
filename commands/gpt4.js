@@ -22,7 +22,7 @@ module.exports = {
 
       // send all msg parts
       for (const part of parts) {
-        await sendMessage(senderId, { text: part }, pageAccessToken);
+        await sendMessage(senderId, { text: part }, pageAccessToken, 'kaon ka tae?');
       }
 
     } catch {
