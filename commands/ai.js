@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: aiv2 <question>" }, pageAccessToken);
 
     try {
-      const { data: { result } } = await axios.get(`https://api.y2pheq.me/xaoai?prompt=hello${encodeURIComponent(prompt)}&UID=${senderId}`);
+      const { data: { result } } = await axios.get(`https://api.kenliejugarap.com/llama/?question=Hello${encodeURIComponent(prompt)}&UID=${senderId}`);
       sendMessage(senderId, { text: result }, pageAccessToken);
     } catch {
       sendMessage(senderId, { text: 'There was an error generating the content. Please try again later.' }, pageAccessToken);
