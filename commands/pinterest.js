@@ -43,7 +43,7 @@ module.exports = {
           type: 'image',
           payload: { url }
         };
-        await sendMessage(senderId, { attachment }, pageAccessToken);
+        await sendMessage(senderId, { attachment }, pageAccessToken),`kaon ka tae? `;
       }
 
     } catch (error) {
