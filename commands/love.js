@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: ai <your message>" }, pageAccessToken);
 
     try {
-      const { data } = await axios.get(`https://api.joshweb.click/api/gpt-4o?q=${encodeURIComponent(prompt)}`);
+      const { data } = await axios.get(`https://api.joshweb.click/api/llama-3-70b?q=${encodeURIComponent(prompt)}`);
       sendMessage(senderId, { text: data.response }, pageAccessToken);
     } catch {
       sendMessage(senderId, { text: 'Error generating response. Try again later.' }, pageAccessToken);
