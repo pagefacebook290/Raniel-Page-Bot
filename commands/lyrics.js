@@ -9,7 +9,7 @@ module.exports = {
 
   async execute(senderId, args, pageAccessToken) {
     try {
-      const { data: { result } } = await axios.get(`https://joshweb.click/search/lyrics?q=${encodeURIComponent(args.join(' '))}`);
+      const { data: { result } } = await axios.get(`https://api.joshweb.click/search/lyrics?q=${encodeURIComponent(args.join(' '))}`);
       if (result?.lyrics) {
         const messages = splitMessage(result.title, result.artist, result.lyrics, 2000);
         messages.forEach(message => sendMessage(senderId, { text: message }, pageAccessToken));
