@@ -1,32 +1,35 @@
+
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'gpt4',
-  description: 'Interact with GPT-4o',
-  usage: 'gpt4 [your message]',
+  description: 'Interact with GPT-4 AI',
+  usage: 'gpt4 [query]',
   author: 'coffee',
 
+  /**
+   * Execute GPT-4 command
+   * @param {string} senderId - User ID
+   * @param {string[]} args - Command arguments
+   * @param {string} pageAccessToken - Page access token
+   */
   async execute(senderId, args, pageAccessToken) {
-    const prompt = args.join(' ');
-    if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
+    const query = args.join(' ');
+    const uid = 'YOUR_UID'; // Replace with your User ID
+
+    if (!query) {
+      return sendMessage(senderId, { text: "Usage: gpt4 <query>" }, pageAccessToken);
+    }
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/gpt-4o?q=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const response = await axios.get(`https://api.joshweb.click/api/gpt-4o?q=${encodeURIComponent(query)}&uid=${uid}`);
+      const responseText = response.data;
 
-      const parts = [];
-
-      for (let i = 0; i < response.length; i += 1999) {
-        parts.push(response.substring(i, i + 1999));
-      }
-
-      // send all msg parts
-      for (const part of parts) {
-        await sendMessage(senderId, { text: part }, pageAccessToken, 'kaon ka tae?');
-      }
-
-    } catch {
-      sendMessage(senderId, { text: 'There was an error generating the content. Please try again later.' }, pageAccessToken);
+      sendMessage(senderId, { text: responseText }, pageAccessToken);
+    } catch (error) {
+      console.error('Error:', error);
+      sendMessage(senderId, { text: 'Error generating response. Try again later.' }, pageAccessToken);
     }
   }
 };
