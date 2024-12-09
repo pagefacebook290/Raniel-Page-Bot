@@ -6,7 +6,7 @@ module.exports = {
   name: 'gemini2',
   description: 'Interact with Google Gemini',
   usage: 'gemini2 [your message]',
-  author: 'coffee',
+  author: 'gelie',
   
   /**
    * Execute Gemini command

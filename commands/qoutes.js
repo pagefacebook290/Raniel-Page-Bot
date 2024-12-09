@@ -6,7 +6,7 @@ module.exports = {
   name: 'quote',
   description: 'Get a random quote',
   usage: 'quote',
-  author: 'coffee',
+  author: 'gelie',
 
   /**
    * Execute Quote command
