@@ -18,7 +18,7 @@ module.exports = {
     const prompt = args.join(' ');
     
     if (!prompt) {
-      return sendMessage(senderId, { text: "Usage: gemini <your message>" }, pageAccessToken);
+      return sendMessage(senderId, { text: "Usage: gemini2 <your message>" }, pageAccessToken);
     }
     
     try {

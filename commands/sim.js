@@ -1,11 +1,11 @@
-
+ 
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'gemini2',
+  name: 'sim',
   description: 'Interact with Google Gemini',
-  usage: 'gemini2 [your message]',
+  usage: 'sim [your message]',
   author: 'Raniel',
   
   /**
@@ -18,7 +18,7 @@ module.exports = {
     const prompt = args.join(' ');
     
     if (!prompt) {
-      return sendMessage(senderId, { text: "Usage: gemini <your message>" }, pageAccessToken);
+      return sendMessage(senderId, { text: "Usage: sim <your message>" }, pageAccessToken);
     }
     
     try {
