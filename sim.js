@@ -22,7 +22,7 @@ module.exports = {
     }
     
     try {
-      const response = await axios.get(`https://api.joshweb.click/gemini?prompt=${encodeURIComponent(prompt)}`);
+      const response = await axios.get(`https://simsimi-api-pro.onrender.com/sim?query=hi${encodeURIComponent(prompt)}`);
       const geminiResponse = response.data.gemini;
       
       sendMessage(senderId, { text: geminiResponse }, pageAccessToken);

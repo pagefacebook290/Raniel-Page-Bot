@@ -5,12 +5,12 @@ module.exports = {
   name: 'besh',
   description: 'Get answer from unity ai',
   usage: 'unity [question]',
-  author: 'coffee',
+  author: 'raniel',
 
   async execute(senderId, args, pageAccessToken) {
 
     const prompt = args.join(' ');
-    if (!prompt) return sendMessage(senderId, { text: "Usage: unity <question>" }, pageAccessToken);
+    if (!prompt) return sendMessage(senderId, { text: "Usage: besh <prompt>" }, pageAccessToken);
 
     try {
        const { data } = await axios.get(`https://api.kenliejugarap.com/unity/?question=${encodeURIComponent(prompt)}`);

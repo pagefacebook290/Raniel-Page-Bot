@@ -9,8 +9,8 @@ const imageFilePath = path.join(__dirname, '../data/image.json');
 module.exports = {
   name: 'gemini',
   description: 'Interact with Google Gemini for image recognition or text responses.',
-  usage: 'gemini [your message] or send an image for recognition',
-  author: 'coffee',
+  usage: 'gemini [your message] or send an image link for recognition',
+  author: 'Raniel',
 
   async execute(senderId, args, pageAccessToken) {
     const prompt = args.join(' ').trim();

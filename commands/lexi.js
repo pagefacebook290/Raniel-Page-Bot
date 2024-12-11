@@ -5,7 +5,7 @@ module.exports = {
   name: 'lexi', 
   description: 'generates a lexi image based on a prompt',
   usage: 'lexi [prompt]', 
-  author: 'Gelie', 
+  author: 'Raniel', 
   
   async execute(senderId, args, pageAccessToken) {
  

@@ -16,8 +16,8 @@ const badWords = new Set(
 module.exports = {
   name: 'girlimage',
   description: 'Search Google Images.',
-  usage: 'gmage <search_query>',
-  author: 'coffee',
+  usage: 'girlimage <search_query>',
+  author: 'Raniel',
 
   async execute(senderId, args) {
     const searchQuery = args.join(' ').trim();
