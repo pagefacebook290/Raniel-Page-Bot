@@ -1,12 +1,7 @@
 
 module.exports = {
   name: "uid",
-  usedby: 0,
-  info: "Get UID of user",
-  onPrefix: false,
-  cooldowns: 10,
-  pageAccessTokenRequired: true,
-  onLaunch: async ({ api, event, pageAccessToken }) => {
+  execute: async ({ api, event, pageAccessToken }) => {
     if (Object.keys(event.mentions).length === 0) {
       if (event.messageReply) {
         const senderID = event.messageReply.senderID;
