@@ -6,9 +6,9 @@ module.exports = {
   usage: 'uid',
   author: 'Name',
   category: 'Info',
-  async execute(senderId, args, pageAccessToken) {
-    await sendMessage(senderId, {
-      text: `Your user ID is: ${senderId}`
+  async execute(senderID, args, pageAccessToken) {
+    await sendMessage(senderID, {
+      text: `Your user ID is: ${senderID}`
     }, pageAccessToken);
   }
 };
