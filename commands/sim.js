@@ -4,7 +4,7 @@ const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'sim',
-  description: 'Interact with Google Gemini',
+  description: 'Interact with Sim',
   usage: 'sim [your message]',
   author: 'Raniel',
   
@@ -22,7 +22,7 @@ module.exports = {
     }
     
     try {
-      const response = await axios.get(`https://simsimi-api-pro.onrender.com/sim?query=hi${encodeURIComponent(prompt)}`);
+      const response = await axios.get(`https://betadash-api-swordslush.vercel.app/?fbclid=${encodeURIComponent(prompt)}`);
       const geminiResponse = response.data.gemini;
       
       sendMessage(senderId, { text: geminiResponse }, pageAccessToken);
