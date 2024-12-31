@@ -19,7 +19,7 @@ module.exports = {
 
     
     const oten = args.join(' ');
-    const apiUrl = `https://api-canvass.vercel.app/city-billboard?userid=4${encodeURIComponent(oten)}`; 
+    const apiUrl = `https://api-canvass.vercel.app/city-billboard?userid=${encodeURIComponent(oten)}`; 
     
     
     await sendMessage(senderId, { text: '⌛Sending your damn image, bitch...' }, pageAccessToken);
