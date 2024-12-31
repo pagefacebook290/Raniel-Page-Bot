@@ -8,7 +8,7 @@ module.exports = {
   author: 'Secret',
   async execute(senderId, args, pageAccessToken) {
     if (args.length < 1) {
-      await sendMessage(senderId, { text: 'Usage: searchvideo <query> [page]' }, pageAccessToken);
+      await sendMessage(senderId, { text: 'Usage: pinayflix <query> [page]' }, pageAccessToken);
       return;
     }
 
@@ -22,15 +22,20 @@ module.exports = {
       const response = await axios.get(apiUrl);
       const videoData = response.data;
 
-
       await sendMessage(senderId, { text: `Found ${videoData.length} videos for "${query}"` }, pageAccessToken);
-      videoData.forEach((video) => {
 
-        sendMessage(senderId, { text: `${video.title}: ${video.url}` }, pageAccessToken);
+      videoData.forEach((video) => {
+        const videoUrl = video.url;
+        sendMessage(senderId, {
+          attachment: {
+            type: 'video',
+            payload: { url: videoUrl }
+          }
+        }, pageAccessToken);
       });
     } catch (error) {
       console.error('Error:', error.message);
       await sendMessage(senderId, { text: 'Failed to search videos. Try again later.' }, pageAccessToken);
     }
-  },
+  }
 };
