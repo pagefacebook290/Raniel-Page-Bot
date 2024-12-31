@@ -18,8 +18,8 @@ module.exports = {
     }
 
     
-    const prompt = args.join(' ');
-    const apiUrl = `https://api-canvass.vercel.app/cupid?userid=${encodeURIComponent(prompt)}`; 
+    const userId = args.join(' ');
+    const apiUrl = `https://api-canvass.vercel.app/cupid?userid=${userId(userId)}`; 
     
     
     await sendMessage(senderId, { text: '⌛Sending your damn image, bitch...' }, pageAccessToken);
