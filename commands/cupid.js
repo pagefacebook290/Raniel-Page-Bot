@@ -1,47 +1,30 @@
- const axios = require('axios');
+
+const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'cupid', 
-  description: 'generates a cupid image based on a prompt',
-  usage: 'cupid [prompt]', 
-  author: 'Gelie', 
-  
+  name: 'cupid',
+  description: 'Generates Cupid image',
+  usage: 'cupid',
+  author: 'Your Name',
   async execute(senderId, args, pageAccessToken) {
- 
-    if (!args || args.length === 0) {
-      
-      await sendMessage(senderId, {
-        text: 'you need to provide prompt stupid idiot.'
-      }, pageAccessToken);
-      return; 
-    }
-
-    
-    const userId = args.join(' ');
-    const apiUrl = `https://api-canvass.vercel.app/cupid?userid=${userId(userId)}`; 
-    
-    
-    await sendMessage(senderId, { text: '⌛Sending your damn image, bitch...' }, pageAccessToken);
+    await sendMessage(senderId, { text: 'Generating Cupid image...' }, pageAccessToken);
 
     try {
-     
+      const fbUserId = senderId; // Use sender's Facebook user ID
+      const apiUrl = `https://api-canvass.vercel.app/cupid?userid=${fbUserId}`;
+      const response = await axios.get(apiUrl);
+      const imageUrl = response.data.image;
+
       await sendMessage(senderId, {
         attachment: {
           type: 'image',
-          payload: {
-            url: apiUrl 
-          }
+          payload: { url: imageUrl }
         }
       }, pageAccessToken);
-
     } catch (error) {
-     
-      console.error('Shit, something went wrong. Fucking API screwed up.', error);
-      
-      await sendMessage(senderId, {
-        text: 'An error occurred while generating the image. Please try again later.'
-      }, pageAccessToken);
+      console.error('Error:', error.message);
+      await sendMessage(senderId, { text: 'Failed to generate image. Try again later.' }, pageAccessToken);
     }
   }
 };

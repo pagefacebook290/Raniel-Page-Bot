@@ -1,47 +1,30 @@
- const axios = require('axios');
+const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'citybillboard', 
-  description: 'generates a citybillboard image based on a prompt',
-  usage: 'citybillboard [prompt]', 
-  author: 'Raniel', 
-  
+  name: 'citybillboard',
+  description: 'Generates city billboard image',
+  usage: 'citybillboard',
+  author: 'Your Name',
   async execute(senderId, args, pageAccessToken) {
- 
-    if (!args || args.length === 0) {
-      
-      await sendMessage(senderId, {
-        text: 'you need to provide prompt stupid idiot.'
-      }, pageAccessToken);
-      return; 
-    }
-
-    
-    const oten = args.join(' ');
-    const apiUrl = `https://api-canvass.vercel.app/city-billboard?userid=${encodeURIComponent(oten)}`; 
-    
-    
-    await sendMessage(senderId, { text: '⌛Sending your damn image, bitch...' }, pageAccessToken);
+    await sendMessage(senderId, { text: 'Generating city billboard...' }, pageAccessToken);
 
     try {
-     
+      const fbLink = 'https://www.facebook.com/USER_ID'; // Replace USER_ID
+      const fbUserId = fbLink.split('/').pop();
+      const apiUrl = `https://api-canvass.vercel.app/city-billboard?userid=${fbUserId}`;
+      const response = await axios.get(apiUrl);
+      const imageUrl = response.data.image;
+
       await sendMessage(senderId, {
         attachment: {
           type: 'image',
-          payload: {
-            url: apiUrl 
-          }
+          payload: { url: imageUrl }
         }
       }, pageAccessToken);
-
     } catch (error) {
-     
-      console.error('Shit, something went wrong. Fucking API screwed up.', error);
-      
-      await sendMessage(senderId, {
-        text: 'An error occurred while generating the image. Please try again later.'
-      }, pageAccessToken);
+      console.error('Error:', error.message);
+      await sendMessage(senderId, { text: 'Failed to generate image. Try again later.' }, pageAccessToken);
     }
   }
 };

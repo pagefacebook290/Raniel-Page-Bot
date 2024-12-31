@@ -4,8 +4,8 @@ const { sendMessage } = require('../handles/sendMessage');
 module.exports = {
   name: 'pinayflix',
   description: 'Searches videos from API',
-  usage: 'searchvideo <query> [page]',
-  author: 'Your Name',
+  usage: 'pinayflix <query> [page]',
+  author: 'Secret',
   async execute(senderId, args, pageAccessToken) {
     if (args.length < 1) {
       await sendMessage(senderId, { text: 'Usage: searchvideo <query> [page]' }, pageAccessToken);
@@ -22,10 +22,10 @@ module.exports = {
       const response = await axios.get(apiUrl);
       const videoData = response.data;
 
-      // Handle video data (e.g., send video links or thumbnails)
+
       await sendMessage(senderId, { text: `Found ${videoData.length} videos for "${query}"` }, pageAccessToken);
       videoData.forEach((video) => {
-        // Assuming video object has 'title' and 'url' properties
+
         sendMessage(senderId, { text: `${video.title}: ${video.url}` }, pageAccessToken);
       });
     } catch (error) {
