@@ -2,10 +2,10 @@
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'billboard', 
-  description: 'generates a billboard image based on a prompt',
-  usage: 'lexi [prompt]', 
-  author: 'Gelie', 
+  name: 'citybillboard', 
+  description: 'generates a citybillboard image based on a prompt',
+  usage: 'citybillboard [prompt]', 
+  author: 'Raniel', 
   
   async execute(senderId, args, pageAccessToken) {
  
@@ -18,8 +18,8 @@ module.exports = {
     }
 
     
-    const prompt = args.join(' ');
-    const apiUrl = `https://api-canvass.vercel.app/city-billboard?userid=4${encodeURIComponent(prompt)}`; 
+    const oten = args.join(' ');
+    const apiUrl = `https://api-canvass.vercel.app/city-billboard?userid=4${encodeURIComponent(oten)}`; 
     
     
     await sendMessage(senderId, { text: '⌛Sending your damn image, bitch...' }, pageAccessToken);

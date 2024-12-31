@@ -2,9 +2,9 @@
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'billboard', 
-  description: 'generates a billboard image based on a prompt',
-  usage: 'lexi [prompt]', 
+  name: 'consert', 
+  description: 'generates a consert image based on a prompt',
+  usage: 'consert [prompt]', 
   author: 'Gelie', 
   
   async execute(senderId, args, pageAccessToken) {

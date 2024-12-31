@@ -3,10 +3,10 @@ const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-name: 'eabab',
-usage: 'eabab',
+name: 'shoti',
+usage: 'shoti',
 description: 'Generate a random girl video.',
-author: 'Jerome',
+author: 'Raniel',
 async execute(senderId, args, pageAccessToken, sendMessage) {
 try {
 const apiUrl = 'https://hiroshi-api.onrender.com/video/eabab';
@@ -16,9 +16,9 @@ const title = response.data.title;
 const username = response.data.username;
 const displayname = response.data.displayname;
 
-  const message = `Title: ${title}\nUsername: ${username}\nDisplay Name: ${displayname}\n\n𝕯𝖔𝖜𝖓𝖑𝖔𝖆𝖉𝖎𝖓𝖌 𝕻𝖑𝖊𝖆𝖘𝖊 𝖂𝖆𝖎𝖙...
+  const oten = `Title: ${title}\nUsername: ${username}\nDisplay Name: ${displayname}\n\n𝕯𝖔𝖜𝖓𝖑𝖔𝖆𝖉𝖎𝖓𝖌 𝕻𝖑𝖊𝖆𝖘𝖊 𝖂𝖆𝖎𝖙...
 `;
-  await sendMessage(senderId, { text: message }, pageAccessToken);
+  await sendMessage(senderId, { text: oten }, pageAccessToken);
 
   const videoMessage = {
     attachment: {
@@ -30,7 +30,7 @@ const displayname = response.data.displayname;
   };
   await sendMessage(senderId, videoMessage, pageAccessToken);
 } catch (error) {
-  console.error('Error:', error.message);
+  console.error('Error:', error.oten);
   sendMessage(senderId, {
     text: 'Sorry, there was an error generating the video. Please try again later.',
   }, pageAccessToken);
