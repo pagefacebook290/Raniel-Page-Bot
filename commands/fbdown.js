@@ -16,27 +16,17 @@ module.exports = {
       return sendMessage(senderId, { text: 'Usage: fbdownloader <video link>' }, pageAccessToken);
     }
 
-    const apiUrl = `https://betadash-search-download.vercel.app/fbdl?url=${encodeURIComponent(videoLink)}`;
-
     try {
-      const response = await axios.get(apiUrl);
-      const videoUrl = response.data;
-
-      if (!videoUrl) {
-        return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
-      }
-
       const videoMessage = {
         attachment: {
           type: 'video',
           payload: {
-            url: videoUrl,
+            url: videoLink,
             is_reusable: true
           }
         }
       };
 
-      await sendMessage(senderId, { text: `Downloading...` }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
