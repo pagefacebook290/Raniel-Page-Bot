@@ -17,16 +17,24 @@ module.exports = {
     }
 
     try {
+      const response = await axios.get(`https://betadash-search-download.vercel.app/fbdl?url=${encodeURIComponent(videoLink)}`);
+      const videoUrl = response.data;
+
+      if (!videoUrl) {
+        return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
+      }
+
       const videoMessage = {
         attachment: {
           type: 'video',
           payload: {
-            url: videoLink,
+            url: videoUrl,
             is_reusable: true
           }
         }
       };
 
+      await sendMessage(senderId, { text: 'Downloading...' }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
