@@ -1,52 +1,60 @@
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
+const fs = require('fs');
+
+const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
   name: 'pinayflix',
-  description: 'Searches videos from API',
-  usage: 'pinayflix <query> [page]',
-  author: 'Secret',
-  async execute(senderId, args, pageAccessToken) {
-    if (args.length < 1) {
-      await sendMessage(senderId, { text: 'Usage: pinayflix <query> [page]' }, pageAccessToken);
-      return;
+  description: 'search for video from pinayflix and send multiple',
+  usage: 'pinaysearch <search title>',
+  author: 'Rized',
+
+  execute: async (senderId, args) => {
+    const pageAccessToken = token;
+    const searchQuery = args.join(' ');
+
+    if (!searchQuery) {
+      return sendMessage(senderId, { text: '❌ Usage: pinaysearch <title>' }, pageAccessToken);
     }
 
-    const otenRaniel = args[0];
-    const page = args[1] || 1;
-
-    await sendMessage(senderId, { text: `Searching for "${otenRaniel}"...` }, pageAccessToken);
+    const apiUrl = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=2`;
 
     try {
-      const apiUrl = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(otenRaniel)}&page=${page}`;
-      const response = await axios.get(apiUrl);
-      const videoData = response.data;
+      const { data } = await axios.get(apiUrl);
 
-      if (!Array.isArray(videoData)) {
-        throw new Error('Invalid video data');
+      if (!data || data.length === 0) {
+        return sendMessage(senderId, { text: '❌ No videos found for the given search query.' }, pageAccessToken);
       }
 
-      await sendMessage(senderId, { text: `Found ${videoData.length} videos for "${otenRaniel}"` }, pageAccessToken);
+      // Build response messages for each video
+      for (const video of data) {
+        const message = `🎥 **Search Result** 🎥\n\n` +
+          `**Title**: ${video.title}\n` +
+          `🔗 **Link**: ${video.link}\n` +
+          `🖼 **Preview Image**: ${video.img}\n\n` +
+          `Enjoy watching!`;
 
-      for (const bilat of videoData) {
-        try {
-          const videoUrl = bilat.url;
-          await sendMessage(senderId, { 
-            attachment: { 
-              type: 'video', 
-              payload: { 
-                url: videoUrl, 
-                is_reusable: true 
-              } 
-            } 
-          }, pageAccessToken);
-        } catch (error) {
-          console.error(`Error sending video: ${error.message}`);
-        }
+        // Send text message
+        await sendMessage(senderId, { text: message }, pageAccessToken);
+
+        // Send video message
+        const videoMessage = {
+          attachment: {
+            type: 'video',
+            payload: {
+              url: video.video,
+              is_reusable: true
+            }
+          }
+        };
+
+        await sendMessage(senderId, videoMessage, pageAccessToken);
       }
+
     } catch (error) {
-      console.error(`Error: ${error.message}`);
-      await sendMessage(senderId, { text: 'Failed to search videos. Try again later.' }, pageAccessToken);
+      console.error('Error:', error.message);
+      sendMessage(senderId, { text: '❌ An error occurred while processing the request. Please try again later.' }, pageAccessToken);
     }
-  }
+  },
 };
