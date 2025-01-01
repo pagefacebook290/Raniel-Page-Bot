@@ -30,12 +30,13 @@ module.exports = {
         attachment: {
           type: 'video',
           payload: {
-            url: videoUrl.video,
+            url: videoUrl,
             is_reusable: true
           }
         }
       };
 
+      await sendMessage(senderId, { text: `Downloading...` }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);

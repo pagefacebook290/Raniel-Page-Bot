@@ -26,12 +26,12 @@ module.exports = {
       }
 
       // Send first video
-      const video = data[0];
+      const video = data[1];
       const videoMessage = {
         attachment: {
           type: 'video',
           payload: {
-            url: video,
+            url: video.video,
             is_reusable: true
           }
         }
