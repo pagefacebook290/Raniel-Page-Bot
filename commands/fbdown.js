@@ -4,7 +4,7 @@ const fs = require('fs');
 const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
-  name: 'fbdownloader',
+  name: 'fbdown',
   description: 'Download Facebook video',
   usage: 'fbdownloader <video link>',
   author: 'Rized',
