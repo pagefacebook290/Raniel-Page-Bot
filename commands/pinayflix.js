@@ -37,7 +37,7 @@ module.exports = {
         }
       };
 
-      await sendMessage(senderId, { text: `📷 ${play.title}\nsana mag bago kana tigang boy.` }, pageAccessToken);
+      await sendMessage(senderId, { text: `📷 ${play.title}\n\npag bag o na uy tigang boy\n-Raniel sa pm` }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
