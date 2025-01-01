@@ -10,13 +10,13 @@ module.exports = {
   author: 'unggoy',
   execute: async (senderId, args) => {
     const pageAccessToken = token;
-    const searchQuery = args.join(' ');
+    const search = args.join(' ');
 
-    if (!searchQuery) {
+    if (!search) {
       return sendMessage(senderId, { text: ' Usage: pinaysearch <title>' }, pageAccessToken);
     }
 
-    const apiKey = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=1`;
+    const apiKey = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(search)}&page=1`;
 
     try {
       const { data } = await axios.get(apiKey);
@@ -26,18 +26,18 @@ module.exports = {
       }
 
       // Send first video
-      const video = data[0];
+      const play = data[0];
       const videoMessage = {
         attachment: {
           type: 'video',
           payload: {
-            url: video.video,
+            url: play.play,
             is_reusable: true
           }
         }
       };
 
-      await sendMessage(senderId, { text: `📷 ${video.title}\nsana mag bago kana tigang boy.` }, pageAccessToken);
+      await sendMessage(senderId, { text: `📷 ${play.title}\nsana mag bago kana tigang boy.` }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
