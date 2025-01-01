@@ -26,14 +26,14 @@ module.exports = {
 
       videoData.forEach((video) => {
         const videoUrl = video.url;
-        sendMessage(senderId, {
-          attachment: {
-            type: 'video',
-            payload: {
-              url: videoUrl,
-              is_reusable: true
-            }
-          }
+        sendMessage(senderId, { 
+          attachment: { 
+            type: 'video', 
+            payload: { 
+              url: videoUrl, 
+              is_reusable: true 
+            } 
+          } 
         }, pageAccessToken);
       });
     } catch (error) {
