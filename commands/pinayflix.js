@@ -29,7 +29,10 @@ module.exports = {
         sendMessage(senderId, {
           attachment: {
             type: 'video',
-            payload: { url: videoUrl }
+            payload: {
+              url: videoUrl,
+              is_reusable: true
+            }
           }
         }, pageAccessToken);
       });
