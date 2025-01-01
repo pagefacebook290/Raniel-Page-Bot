@@ -7,22 +7,22 @@ module.exports = {
   name: 'pinayflix',
   description: 'Search for video from PinayFlix',
   usage: 'pinaysearch <search title>',
-  author: 'Rized',
+  author: 'unggoy',
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const searchQuery = args.join(' ');
 
     if (!searchQuery) {
-      return sendMessage(senderId, { text: '❌ Usage: pinaysearch <title>' }, pageAccessToken);
+      return sendMessage(senderId, { text: ' Usage: pinaysearch <title>' }, pageAccessToken);
     }
 
-    const apiUrl = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=1`;
+    const apiKey = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=1`;
 
     try {
-      const { data } = await axios.get(apiUrl);
+      const { data } = await axios.get(apiKey);
 
       if (!data || data.length === 0) {
-        return sendMessage(senderId, { text: '❌ No videos found for the given search query.' }, pageAccessToken);
+        return sendMessage(senderId, { text: ' No videos found for the given search query.' }, pageAccessToken);
       }
 
       // Send first video
@@ -37,11 +37,11 @@ module.exports = {
         }
       };
 
-      await sendMessage(senderId, { text: `🎥 ${video.title}` }, pageAccessToken);
+      await sendMessage(senderId, { text: `📷 ${video.title}\nsana mag bago kana tigang boy.` }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
-      sendMessage(senderId, { text: '❌ An error occurred while processing the request. Please try again later.' }, pageAccessToken);
+      sendMessage(senderId, { text: 'An error occurred while processing the request. Please try again later.' }, pageAccessToken);
     }
   }
 };
