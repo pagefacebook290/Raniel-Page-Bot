@@ -31,7 +31,7 @@ module.exports = {
         attachment: {
           type: 'video',
           payload: {
-            url: video.video,
+            url: video,
             is_reusable: true
           }
         }
