@@ -26,10 +26,6 @@ module.exports = {
       }
 
       const video = data[0];
-      const message = `🎥 **${video.title}** 🎥\n\n` + 
-      `🔗 **Link**: ${video.url}\n` + 
-      `🖼 **Preview Image**: ${video.thumbnail}\n\n` + 
-      `Enjoy watching!`;
       const videoMessage = {
         attachment: {
           type: 'video',
@@ -40,8 +36,8 @@ module.exports = {
         }
       };
 
-      await sendMessage(senderId, { text: message }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
+      await sendMessage(senderId, { text: `🎥 ${video.title} 🎥` }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
       sendMessage(senderId, { text: '❌ An error occurred while processing the request. Please try again later.' }, pageAccessToken);
