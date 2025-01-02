@@ -27,6 +27,7 @@ module.exports = {
 
       // Send first video
       const video = data[0];
+      const message = `🎥 **Search Result** 🎥\n\n` + `**Title**: ${video.title}\n` + `🔗 **Link**: ${video.link}\n` + `🖼 **Preview Image**: ${video.img}\n\n` + `Enjoy watching!`;
       const videoMessage = {
         attachment: {
           type: 'video',
@@ -37,7 +38,7 @@ module.exports = {
         }
       };
 
-      await sendMessage(senderId, { text: `🎥 ${video.title}\n\n pag bag o na tigang boy...\n-Raniel sa pm!` }, pageAccessToken);
+      await sendMessage(senderId, { text: message }, pageAccessToken);
       await sendMessage(senderId, videoMessage, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
