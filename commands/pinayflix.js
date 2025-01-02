@@ -26,12 +26,15 @@ module.exports = {
       }
 
       const video = data[0];
-      const message = `🎥 **Search Result** 🎥\n\n` + `**Title**: ${video.title}\n` + `🔗 **Link**: ${video.link}\n` + `🖼 **Preview Image**: ${video.img}\n\n` + `Enjoy watching!`;
+      const message = `🎥 **${video.name}** 🎥\n\n` + 
+      `🔗 **Link**: ${video.url}\n` + 
+      `🖼 **Preview Image**: ${video.thumbnail}\n\n` + 
+      `Enjoy watching!`;
       const videoMessage = {
         attachment: {
           type: 'video',
           payload: {
-            url: video.video,
+            url: video.url,
             is_reusable: true
           }
         }
