@@ -26,7 +26,7 @@ module.exports = {
       }
 
       const video = data[0];
-      const message = `🎥 **${video.name}** 🎥\n\n` + 
+      const message = `🎥 **${video.title}** 🎥\n\n` + 
       `🔗 **Link**: ${video.url}\n` + 
       `🖼 **Preview Image**: ${video.thumbnail}\n\n` + 
       `Enjoy watching!`;
