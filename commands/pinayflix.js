@@ -1,15 +1,13 @@
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 const fs = require('fs');
-
 const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
   name: 'pinayflix',
-  description: 'search for video from pinayflix and send multiple',
+  description: 'Search for video from PinayFlix',
   usage: 'pinaysearch <search title>',
   author: 'Rized',
-
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const searchQuery = args.join(' ');
@@ -18,7 +16,7 @@ module.exports = {
       return sendMessage(senderId, { text: '❌ Usage: pinaysearch <title>' }, pageAccessToken);
     }
 
-    const apiUrl = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=2`;
+    const apiUrl = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=1`;
 
     try {
       const { data } = await axios.get(apiUrl);
@@ -27,18 +25,15 @@ module.exports = {
         return sendMessage(senderId, { text: '❌ No videos found for the given search query.' }, pageAccessToken);
       }
 
-      // Build response messages for each video
-      for (const video of data) {
-        const message = `🎥 **Search Result** 🎥\n\n` +
-          `**Title**: ${video.title}\n` +
-          `🔗 **Link**: ${video.link}\n` +
-          `🖼 **Preview Image**: ${video.img}\n\n` +
-          `Enjoy watching!`;
+      const maxVideos = 10; // Maaaring baguhin ang halaga
+      const videos = data.slice(0, maxVideos);
 
-        // Send text message
-        await sendMessage(senderId, { text: message }, pageAccessToken);
+      for (const video of videos) {
+        const message = `🎥 **${video.title}** 🎥\n\n` + 
+        `🔗 **Link**: ${video.link}\n` + 
+        `🖼 **Preview Image**: ${video.img}\n\n` + 
+        `Enjoy watching!`;
 
-        // Send video message
         const videoMessage = {
           attachment: {
             type: 'video',
@@ -50,11 +45,11 @@ module.exports = {
         };
 
         await sendMessage(senderId, videoMessage, pageAccessToken);
+        await sendMessage(senderId, { text: message }, pageAccessToken);
       }
-
     } catch (error) {
       console.error('Error:', error.message);
       sendMessage(senderId, { text: '❌ An error occurred while processing the request. Please try again later.' }, pageAccessToken);
     }
-  },
+  }
 };
