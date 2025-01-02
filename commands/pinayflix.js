@@ -25,7 +25,6 @@ module.exports = {
         return sendMessage(senderId, { text: '❌ No videos found for the given search query.' }, pageAccessToken);
       }
 
-      // Send first video
       const video = data[0];
       const message = `🎥 **Search Result** 🎥\n\n` + `**Title**: ${video.title}\n` + `🔗 **Link**: ${video.link}\n` + `🖼 **Preview Image**: ${video.img}\n\n` + `Enjoy watching!`;
       const videoMessage = {
