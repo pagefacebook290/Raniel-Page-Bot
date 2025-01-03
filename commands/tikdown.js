@@ -5,7 +5,7 @@ module.exports = {
   name: 'tikdown',
   usage: 'tikdown <url>',
   description: 'Download a TikTok video from the provided link.',
-  author: 'Jerome',
+  author: 'raniel',
   async execute(senderId, args, pageAccessToken, sendMessage) {
     if (args.length < 1) {
       return sendMessage(senderId, {
