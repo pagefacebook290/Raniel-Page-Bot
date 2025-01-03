@@ -1,4 +1,4 @@
- const axios = require('axios');
+const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
@@ -19,12 +19,23 @@ module.exports = {
         return sendMessage(senderId, { text: `Error: ${data.error}\nParameter: ${data.parameter}` }, pageAccessToken);
       }
 
-      if (!data[0]) {
+      if (!data[0] || !data[0].url) {
         return sendMessage(senderId, { text: 'Video tidak ditemukan.' }, pageAccessToken);
       }
 
       const video = data[0];
-      sendMessage(senderId, { text: `Judul: ${video.title}\nURL: ${video.url}` }, pageAccessToken);
+      const videoMessage = {
+        attachment: {
+          type: 'video',
+          payload: {
+            url: video.video,
+            is_reusable: true
+          }
+        }
+      };
+
+      await sendMessage(senderId, videoMessage, pageAccessToken);
+      sendMessage(senderId, { text: `Judul: ${video.title}` }, pageAccessToken);
     } catch (error) {
       console.error(error);
       sendMessage(senderId, { text: 'Sorry, an error occurred.' }, pageAccessToken);
