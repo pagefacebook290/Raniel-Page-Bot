@@ -3,7 +3,7 @@ const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'eabab',
+  name: 'shoti',
   usage: 'eabab',
   description: 'Generate a random girl video.',
   author: 'Jerome',
