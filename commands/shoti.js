@@ -1,40 +1,40 @@
-
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-name: 'shoti',
-usage: 'shoti',
-description: 'Generate a random girl video.',
-author: 'Raniel',
-async execute(senderId, args, pageAccessToken, sendMessage) {
-try {
-const apiUrl = 'https://hiroshi-api.onrender.com/video/eabab';
-const response = await axios.get(apiUrl);
-const videoUrl = response.data.link;
-const title = response.data.title;
-const username = response.data.username;
-const displayname = response.data.displayname;
+  name: 'shoti',
+  description: 'Download short videos.',
+  usage: 'shoti [search query]',
+  author: 'Your Name',
+  async execute(senderId, args, pageAccessToken) {
+    if (!args.length) {
+      return sendMessage(senderId, { text: 'Please provide a search query.' }, pageAccessToken);
+    }
 
-  const oten = `Title: ${title}\nUsername: ${username}\nDisplay Name: ${displayname}\n\n𝕯𝖔𝖜𝖓𝖑𝖔𝖆𝖉𝖎𝖓𝖌 𝕻𝖑𝖊𝖆𝖘𝖊 𝖂𝖆𝖎𝖙...
-`;
-  await sendMessage(senderId, { text: oten }, pageAccessToken);
+    try {
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/shoti?q=${encodeURIComponent(args.join(' '))}`);
+      const data = response.data;
 
-  const videoMessage = {
-    attachment: {
-      type: 'video',
-      payload: {
-        url: videoUrl,
-      },
-    },
-  };
-  await sendMessage(senderId, videoMessage, pageAccessToken);
-} catch (error) {
-  console.error('Error:', error.oten);
-  sendMessage(senderId, {
-    text: 'Sorry, there was an error generating the video. Please try again later.',
-  }, pageAccessToken);
-}
+      if (data.error) {
+        return sendMessage(senderId, { text: `Error: ${data.error}` }, pageAccessToken);
+      }
 
-},
+      const video = data[0];
+      const videoMessage = {
+        attachment: {
+          type: 'video',
+          payload: {
+            url: video.url,
+            is_reusable: true
+          }
+        }
+      };
+
+      await sendMessage(senderId, videoMessage, pageAccessToken);
+      sendMessage(senderId, { text: `Judul: ${video.title}` }, pageAccessToken);
+    } catch (error) {
+      console.error(error);
+      sendMessage(senderId, { text: 'Sorry, an error occurred.' }, pageAccessToken);
+    }
+  }
 };
