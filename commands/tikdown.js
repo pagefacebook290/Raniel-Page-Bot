@@ -2,10 +2,10 @@ const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'tikdown',
-  usage: 'tikdown <url>',
-  description: 'Download a TikTok video from the provided link.',
-  author: 'raniel',
+  name: 'tikdownload',
+  usage: 'tikdownload <url>',
+  description: 'Download a TikTok video from the provided URL.',
+  author: 'Jerome',
   async execute(senderId, args, pageAccessToken, sendMessage) {
     if (args.length < 1) {
       return sendMessage(senderId, {
@@ -18,7 +18,7 @@ module.exports = {
 
     try {
       const response = await axios.get(apiUrl);
-      const videoLink = response.data.link; // Assuming the API returns the video link in this format
+      const videoLink = response.data.link; // Siguraduhing tama ang key na ginagamit mo mula sa response
 
       if (!videoLink) {
         return sendMessage(senderId, {
@@ -26,7 +26,7 @@ module.exports = {
         }, pageAccessToken);
       }
 
-      const message = 'Here is your TikTok video:';
+      const message = `Here is your TikTok video:\n${videoLink}`;
       await sendMessage(senderId, { text: message }, pageAccessToken);
 
       const videoMessage = {
