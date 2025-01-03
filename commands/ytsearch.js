@@ -1,14 +1,14 @@
-const axios = require('axios');
+ const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'ytsearch',
   description: 'Search YouTube videos.',
-  usage: 'ytsearch [video name]',
-  author: 'Raniel',
+  usage: 'ytsearch [video URL atau search query]',
+  author: 'Your Name',
   async execute(senderId, args, pageAccessToken) {
     if (!args.length) {
-      return sendMessage(senderId, { text: 'Please provide a search query.' }, pageAccessToken);
+      return sendMessage(senderId, { text: 'Please provide a search query or URL.' }, pageAccessToken);
     }
 
     try {
@@ -16,21 +16,15 @@ module.exports = {
       const data = response.data;
 
       if (data.error) {
-        return sendMessage(senderId, { text: data.error }, pageAccessToken);
+        return sendMessage(senderId, { text: `Error: ${data.error}\nParameter: ${data.parameter}` }, pageAccessToken);
+      }
+
+      if (!data[0]) {
+        return sendMessage(senderId, { text: 'Video tidak ditemukan.' }, pageAccessToken);
       }
 
       const video = data[0];
-      const videoMessage = {
-        attachment: {
-          type: 'video',
-          payload: {
-            url: video.url,
-            is_reusable: true
-          }
-        }
-      };
-      sendMessage(senderId, videoMessage, pageAccessToken);
-      sendMessage(senderId, { text: `🎥 ${video.title} 🎥` }, pageAccessToken);
+      sendMessage(senderId, { text: `Judul: ${video.title}\nURL: ${video.url}` }, pageAccessToken);
     } catch (error) {
       console.error(error);
       sendMessage(senderId, { text: 'Sorry, an error occurred.' }, pageAccessToken);
