@@ -1,40 +1,40 @@
-const axios = require('axios');
+ const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'shoti',
-  description: 'Download short videos.',
-  usage: 'shoti [search query]',
-  author: 'Your Name',
-  async execute(senderId, args, pageAccessToken) {
-    if (!args.length) {
-      return sendMessage(senderId, { text: 'Please provide a search query.' }, pageAccessToken);
-    }
-
+  description: 'Download short video.',
+  usage: 'shoti',
+  author: 'Iyo',
+  async execute(senderId, args, pageAccessToken, sendMessage) {
     try {
-      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/shoti?q=${encodeURIComponent(args.join(' '))}`);
-      const data = response.data;
-
-      if (data.error) {
-        return sendMessage(senderId, { text: `Error: ${data.error}` }, pageAccessToken);
+      const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti';
+      const response = await axios.get(apiUrl);
+      
+      if (!response.data) {
+        throw new Error('No data found');
       }
-
-      const video = data[0];
+      
+      const videoUrl = response.data[0].url;
+      const title = response.data[0].title;
+      
+      const message = `Title: ${title}\nDownloading...`;
+      
+      await sendMessage(senderId, { text: message }, pageAccessToken);
+      
       const videoMessage = {
         attachment: {
           type: 'video',
           payload: {
-            url: video.url,
-            is_reusable: true
-          }
-        }
+            url: videoUrl,
+          },
+        },
       };
-
+      
       await sendMessage(senderId, videoMessage, pageAccessToken);
-      sendMessage(senderId, { text: `Judul: ${video.title}` }, pageAccessToken);
     } catch (error) {
-      console.error(error);
-      sendMessage(senderId, { text: 'Sorry, an error occurred.' }, pageAccessToken);
+      console.error('Error:', error.message);
+      sendMessage(senderId, { text: 'Sorry, may error sa pag-download ng video.' }, pageAccessToken);
     }
-  }
+  },
 };
