@@ -31,7 +31,7 @@ module.exports = {
       for (const video of videos) {
         const message = `${video.title} 🎥\n\n` +
           `${video.link}\n`  +
-          `Enjoy watching!`;
+          `Enjoy watching! tigang boy.`;
 
         const videoMessage = {
           attachment: {
