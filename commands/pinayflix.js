@@ -29,9 +29,7 @@ module.exports = {
       const videos = data.slice(0, maxVideos);
 
       for (const video of videos) {
-        return sendMessage(senderId,{
-          text: `pag bag o na tigang boy...!\n\n-Raniel sa pm.`
-        }, pageAccessToken);
+        const message = `${video.title}\n\n pag bag o na uy tigang.`;
 
         const videoMessage = {
           attachment: {
@@ -43,7 +41,7 @@ module.exports = {
           }
         };
 
-        await sendMessage(senderId, videoMessage, pageAccessToken)+`kaon ka tae? `;
+        await sendMessage(senderId, videoMessage, pageAccessToken);
         await sendMessage(senderId, { text: message }, pageAccessToken);
       }
     } catch (error) {
