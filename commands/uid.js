@@ -1,3 +1,4 @@
+const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
@@ -12,14 +13,15 @@ module.exports = {
     }
 
     const url = args[0];
-    const regex = /(profile.php\?id=|\/)(\d+|[a-zA-Z0-9.]+)/;
-    const match = url.match(regex);
+    const username = url.split('/').pop();
 
-    if (!match) {
-      return await sendMessage(senderID, { text: 'Invalid Facebook profile URL.' }, pageAccessToken);
+    try {
+      const response = await axios.get(`https://graph.facebook.com/${username}?fields=id&access_token=${pageAccessToken}`);
+      const userId = response.data.id;
+      await sendMessage(senderID, { text: `Ang Facebook user ID ay: ${userId}` }, pageAccessToken);
+    } catch (error) {
+      console.error('Error:', error.message);
+      await sendMessage(senderID, { text: 'Error sa pagkuha ng user ID.' }, pageAccessToken);
     }
-
-    const userId = match[2];
-    await sendMessage(senderID, { text: `Ang Facebook user ID ay: ${userId}` }, pageAccessToken);
   }
 };
