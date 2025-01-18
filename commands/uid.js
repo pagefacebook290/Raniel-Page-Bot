@@ -12,14 +12,14 @@ module.exports = {
     }
 
     const url = args[0];
-    const regex = /(?:id=|\/)(\d+)/;
+    const regex = /(profile.php\?id=|\/)(\d+|[a-zA-Z0-9.]+)/;
     const match = url.match(regex);
 
     if (!match) {
       return await sendMessage(senderID, { text: 'Invalid Facebook profile URL.' }, pageAccessToken);
     }
 
-    const userId = match[1];
+    const userId = match[2];
     await sendMessage(senderID, { text: `Ang Facebook user ID ay: ${userId}` }, pageAccessToken);
   }
 };
