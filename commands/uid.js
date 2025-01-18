@@ -16,7 +16,7 @@ module.exports = {
     const username = url.split('/').pop();
 
     try {
-      const response = await axios.get(`https://graph.facebook.com/${username}?fields=id&access_token=${pageAccessToken}`);
+      const response = await axios.get(`https://graph.facebook.com/${username}?fields=id&access_token=EAASWcZB00spABO0GifETV7w54cKclqQpmZA952DPBxZBSx1Ap037ZBi10MZCGd1bItARGEnWynzlxAHoOmSUEhPiVbADPmHm9fZBqT2SG3xrI0SDZAwXTBbMCKfn5DXGXYHw0Rd7ZBJP43MApl5RzJ2tL6ZARTbCGDOtJoYPasxAZCwUrJZBSVpSOYxzN78HExh46gTiwZDZD`);
       const userId = response.data.id;
       await sendMessage(senderID, { text: `Ang Facebook user ID ay: ${userId}` }, pageAccessToken);
     } catch (error) {
