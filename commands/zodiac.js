@@ -1,35 +1,194 @@
-``
 const { sendMessage } = require('../handles/sendMessage');
 
 const zodiacFacts = {
-  'January': 'People born in January are either Capricorns (December 22 - January 19) or Aquarians (January 20 - February 18), known for their discipline and humanitarianism, respectively.',
-  'February': 'People born in February are either Aquarians (January 20 - February 18) or Pisces (February 19 - March 20), known for their independence and compassion, respectively.',
-  'March': 'People born in March are either Pisces (February 19 - March 20) or Aries (March 21 - April 19), known for their intuition and adventurous spirit, respectively.',
-  'April': 'People born in April are either Aries (March 21 - April 19) or Tauruses (April 20 - May 20), known for their confidence and reliability, respectively.',
-  'May': 'People born in May are either Tauruses (April 20 - May 20) or Geminis (May 21 - June 20), known for their practicality and curiosity, respectively.',
-  'June': 'People born in June are either Geminis (May 21 - June 20) or Cancers (June 21 - July 22), known for their versatility and emotional depth, respectively.',
-  'July': 'People born in July are either Cancers (June 21 - July 22) or Leos (July 23 - August 22), known for their nurturing spirit and confidence, respectively.',
-  'August': 'People born in August are either Leos (July 23 - August 22) or Virgos (August 23 - September 22), known for their creativity and practicality, respectively.',
-  'September': 'People born in September are either Virgos (August 23 - September 22) or Librans (September 23 - October 22), known for their attention to detail and social skills, respectively.',
-  'October': 'People born in October are either Librans (September 23 - October 22) or Scorpios (October 23 - November 21), known for their diplomacy and intensity, respectively.',
-  'November': 'People born in November are either Scorpios (October 23 - November 21) or Sagittarians (November 22 - December 21), known for their passion and adventurous spirit, respectively.',
-  'December': 'People born in December are either Sagittarians (November 22 - December 21) or Capricorns (December 22 - January 19), known for their optimism and discipline, respectively.'
+  'January': {
+    dates: 'January 20 - February 18',
+    fact: 'Aquarians, born between January 20 and February 18, are known for their humanitarianism, independence, and unconventional thinking.',
+    zodiac: 'Aquarius',
+    element: 'Air',
+    symbol: '♒',
+    ruling_planet: 'Uranus',
+    personality_traits: [
+      'Humanitarian',
+      'Independent',
+      'Unconventional',
+      'Rebellious'
+    ]
+  },
+  'February': {
+    dates: 'February 19 - March 20',
+    fact: 'Pisces, born between February 19 and March 20, are known for their compassion, intuition, and creativity.',
+    zodiac: 'Pisces',
+    element: 'Water',
+    symbol: '♓',
+    ruling_planet: 'Neptune',
+    personality_traits: [
+      'Compassionate',
+      'Intuitive',
+      'Creative',
+      'Sensitive'
+    ]
+  },
+  'March': {
+    dates: 'March 21 - April 19',
+    fact: 'Aries, born between March 21 and April 19, are known for their confidence, determination, and adventurous spirit.',
+    zodiac: 'Aries',
+    element: 'Fire',
+    symbol: '♈',
+    ruling_planet: 'Mars',
+    personality_traits: [
+      'Confident',
+      'Determined',
+      'Adventurous',
+      'Impulsive'
+    ]
+  },
+  'April': {
+    dates: 'April 20 - May 20',
+    fact: 'Tauruses, born between April 20 and May 20, are known for their practicality, reliability, and sensuality.',
+    zodiac: 'Taurus',
+    element: 'Earth',
+    symbol: '♉',
+    ruling_planet: 'Venus',
+    personality_traits: [
+      'Practical',
+      'Reliable',
+      'Sensual',
+      'Stubborn'
+    ]
+  },
+  'May': {
+    dates: 'May 21 - June 20',
+    fact: 'Geminis, born between May 21 and June 20, are known for their curiosity, versatility, and communication skills.',
+    zodiac: 'Gemini',
+    element: 'Air',
+    symbol: '♊',
+    ruling_planet: 'Mercury',
+    personality_traits: [
+      'Curious',
+      'Versatile',
+      'Communicative',
+      'Unpredictable'
+    ]
+  },
+  'June': {
+    dates: 'June 21 - July 22',
+    fact: 'Cancers, born between June 21 and July 22, are known for their emotional depth, nurturing spirit, and strong family ties.',
+    zodiac: 'Cancer',
+    element: 'Water',
+    symbol: '♋',
+    ruling_planet: 'Moon',
+    personality_traits: [
+      'Emotional',
+      'Nurturing',
+      'Loyal',
+      'Sentimental'
+    ]
+  },
+  'July': {
+    dates: 'July 23 - August 22',
+    fact: 'Leos, born between July 23 and August 22, are known for their confidence, creativity, and generosity.',
+    zodiac: 'Leo',
+    element: 'Fire',
+    symbol: '♌',
+    ruling_planet: 'Sun',
+    personality_traits: [
+      'Confident',
+      'Creative',
+      'Generous',
+      'Prideful'
+    ]
+  },
+  'August': {
+    dates: 'August 23 - September 22',
+    fact: 'Virgos, born between August 23 and September 22, are known for their practicality, attention to detail, and analytical nature.',
+    zodiac: 'Virgo',
+    element: 'Earth',
+    symbol: '♍',
+    ruling_planet: 'Mercury',
+    personality_traits: [
+      'Practical',
+      'Analytical',
+      'Precise',
+      'Critical'
+    ]
+  },
+  'September': {
+    dates: 'September 23 - October 22',
+    fact: 'Librans, born between September 23 and October 22, are known for their diplomacy, social skills, and balance.',
+    zodiac: 'Libra',
+    element: 'Air',
+    symbol: '♎',
+    ruling_planet: 'Venus',
+    personality_traits: [
+      'Diplomatic',
+      'Social',
+      'Balanced',
+      'Indecisive'
+    ]
+  },
+  'October': {
+    dates: 'October 23 - November 21',
+    fact: 'Scorpios, born between October 23 and November 21, are known for their intense passion, strong intuition, and unwavering determination.',
+    zodiac: 'Scorpio',
+    element: 'Water',
+    symbol: '♏',
+    ruling_planet: 'Pluto',
+    personality_traits: [
+      'Passionate',
+      'Resourceful',
+      'Determined',
+      'Intense'
+]
+},
+ 'November': {
+    dates: 'November 22 - December 21',
+    fact: 'Sagittarians, born between November 22 and December 21, are known for their adventurous spirit, optimism, and love of learning.',
+    zodiac: 'Sagittarius',
+    element: 'Fire',
+    symbol: '♐',
+    ruling_planet: 'Jupiter',
+    personality_traits: [
+       'Adventurous',
+       'Optimistic',
+       'Independent',
+       'Blunt'
+]
+},
+  'December': {
+    dates: 'December 22 - January 19',
+    fact: 'Capricorns, born between December 22 and January 19, are known for their discipline, responsibility, and ambition.',
+    zodiac: 'Capricorn',
+    element: 'Earth',
+    symbol: '♑',
+    ruling_planet: 'Saturn',
+    personality_traits: [
+       'Disciplined',
+       'Responsible',
+       'Ambitious',
+       'Perfectionistic'
+]
+}
 };
 
-module.exports = {
-  name: 'zodiac',
-  description: 'Get a fact about a zodiac sign',
-  usage: 'zodiac [month]',
-  author: 'raniel',
-  async execute(senderId, args, pageAccessToken) {
-    if (args.length === 0) {
-      return sendMessage(senderId, { text: 'Please provide a month (e.g. "zodiac August")' }, pageAccessToken);
-    }
-    const month = args[0].charAt(0).toUpperCase() + args[0].slice(1).toLowerCase();
-    if (!zodiacFacts[month]) {
-      return sendMessage(senderId, { text: `Sorry, I don't have information about the zodiac sign for ${month}.` }, pageAccessToken);
-    }
-    const fact = zodiacFacts[month];
-    sendMessage(senderId, { text: fact }, pageAccessToken);
-  }
+    module.exports = {
+      name: 'zodiac',
+      description: 'Get information about a zodiac sign',
+      usage: 'zodiac [month]',
+      author: 'raniel',
+      async execute(senderId, args, pageAccessToken) {
+        if (args.length === 0) {
+    return sendMessage(senderId, { text: 'Please provide a month (e.g. "zodiac August")' }, pageAccessToken);
+}
+const month = args[0].charAt(0).toUpperCase() + args[0].slice(1).toLowerCase();
+if (!zodiacFacts[month]) {
+  return sendMessage(senderId, { text: `Sorry, I don't have information about the zodiac sign for ${month}.` }, pageAccessToken);
+  
+}
+const fact = zodiacFacts[month];
+const message = `**${fact.zodiac} (${fact.dates})**\n\n${fact.fact}\n\n**Personality Traits:**\n${fact.personality_traits.join(', ')}\n\n**Element:** ${fact.element}\n**Symbol:** ${fact.symbol}\n**Ruling Planet:** ${fact.ruling_planet}`;
+sendMessage(senderId, { text: message }, pageAccessToken);
+  
+}
+  
 };
