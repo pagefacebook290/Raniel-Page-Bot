@@ -2,7 +2,6 @@ const { sendMessage } = require('../handles/sendMessage');
 
  const zodiacFacts = {
   'January': {
-    dates: 'January 20 - February 18',
     fact: 'Aquarians, born between January 20 and February 18, are known for their humanitarianism, independence, and unconventional thinking.',
     zodiac: 'Aquarius',
     element: 'Air',
@@ -18,7 +17,6 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Aries', 'Libra', 'Gemini']
   },
   'February': {
-    dates: 'February 19 - March 20',
     fact: 'Pisces, born between February 19 and March 20, are known for their compassion, intuition, and creativity.',
     zodiac: 'Pisces',
     element: 'Water',
@@ -34,8 +32,7 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Aries', 'Libra', 'Gemini']
   },
   'March': {
-    dates: 'March 21 - April 19',
-    fact: 'Aries, born between March 21 and April 19, are known for their confidence, determination, and adventurous spirit.',
+    fact: 'Arieses, born between March 21 and April 19, are known for their confidence, determination, and adventurous spirit.',
     zodiac: 'Aries',
     element: 'Fire',
     symbol: '♈',
@@ -50,7 +47,6 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Taurus', 'Cancer', 'Virgo', 'Capricorn']
   },
   'April': {
-    dates: 'April 20 - May 20',
     fact: 'Tauruses, born between April 20 and May 20, are known for their practicality, reliability, and sensuality.',
     zodiac: 'Taurus',
     element: 'Earth',
@@ -66,7 +62,6 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Aquarius']
   },
   'May': {
-    dates: 'May 21 - June 20',
     fact: 'Geminis, born between May 21 and June 20, are known for their curiosity, versatility, and communication skills.',
     zodiac: 'Gemini',
     element: 'Air',
@@ -82,7 +77,6 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Taurus', 'Virgo', 'Cancer', 'Capricorn']
   },
   'June': {
-    dates: 'June 21 - July 22',
     fact: 'Cancers, born between June 21 and July 22, are known for their emotional depth, nurturing spirit, and strong family ties.',
     zodiac: 'Cancer',
     element: 'Water',
@@ -98,7 +92,6 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Aquarius']
   },
   'July': {
-    dates: 'July 23 - August 22',
     fact: 'Leos, born between July 23 and August 22, are known for their confidence, creativity, and generosity.',
     zodiac: 'Leo',
     element: 'Fire',
@@ -115,7 +108,6 @@ const { sendMessage } = require('../handles/sendMessage');
     
   },
   'August': {
-    dates: 'August 23 - September 22', 
     fact: 'Virgos, born between August 23 and September 22, are known for their practicality, attention to detail, and analytical nature.',
     zodiac: 'Virgo',
     element: 'Earth',
@@ -131,7 +123,6 @@ const { sendMessage } = require('../handles/sendMessage');
       worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
   },
   'September': {
-    dates: 'September 23 - October 22',
     fact: 'Librans, born between September 23 and October 22, are known for their diplomacy, social skills, and balance.',
     zodiac: 'Libra',
     element: 'Air',
@@ -147,7 +138,6 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Taurus', 'Virgo', 'Scorpio', 'Capricorn']
   },
   'October': {
-    dates: 'October 23 - November 21',
     fact: 'Scorpios, born between October 23 and November 21, are known for their intense passion, strong intuition, and unwavering determination.',
     zodiac: 'Scorpio',
     element: 'Water',
@@ -163,7 +153,6 @@ const { sendMessage } = require('../handles/sendMessage');
       worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
   },
   'November': {
-    dates: 'November 22 - December 21',
     fact: 'Sagittarians, born between November 22 and December 21, are known for their adventurous spirit, optimism, and love of learning.',
     zodiac: 'Sagittarius',
     element: 'Fire',
@@ -179,8 +168,7 @@ const { sendMessage } = require('../handles/sendMessage');
       worst_matches: ['Taurus', 'Virgo', 'Scorpio', 'Capricorn']
     },
       'December': {
-        dates: 'December 22 - January 19',
-        fact: 'Capricorns, born between December 22 and January 19, are known for their discipline, responsibility, and ambition.',
+        fact: 'Capricornians, born between December 22 and January 19, are known for their discipline, responsibility, and ambition.',
         zodiac: 'Capricorn',
         element: 'Earth',
         symbol: '♑',
@@ -212,7 +200,7 @@ const { sendMessage } = require('../handles/sendMessage');
     return sendMessage(senderId, { text: `Sorry, I don't have information about the zodiac sign for ${month}.` }, pageAccessToken);
   }
   const fact = zodiacFacts[month];
-  const message = `${fact.fact}\n\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\n-Personality Traits:\n${fact.personality_traits.join('  \n')}\nBest Matches ${fact.best_matches.join(',\n')}\n-Worst Matches: ${fact.worst_matches.join(',\n')}`;
+  const message = `${fact.fact}\n\nZodiac: ${fact.zodiac}\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\n-Personality Traits:\n${fact.personality_traits.join(', ')}\n\nBest Matches ${fact.best_matches.join(',\n')}\n\n-Worst Matches: ${fact.worst_matches.join(', ')}`;
 sendMessage(senderId, { text: message }, pageAccessToken);
 }
 };
