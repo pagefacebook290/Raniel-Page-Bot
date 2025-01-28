@@ -1,7 +1,7 @@
 const { sendMessage } = require('../handles/sendMessage');
 
  const zodiacFacts = {
-  'January': {
+  'January 20': {
     dates: 'January 20 - February 18.', 
     fact: 'Aquarians are known for their innovative, humanitarian, and independent spirit. They value freedom and originality, often thinking outside the box. Their unique perspectives and strong ideals make them natural leaders in social causes.',
     zodiac: 'Aquarius',
