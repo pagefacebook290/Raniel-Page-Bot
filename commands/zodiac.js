@@ -32,7 +32,7 @@ const { sendMessage } = require('../handles/sendMessage');
     worst_matches: ['Aries', 'Libra', 'Gemini']
   },
   'March': {
-    fact: 'Arieses, born between March 21 and April 19, are known for their confidence, determination, and adventurous spirit.',
+    fact: 'Aries, born between March 21 and April 19, are known for their confidence, determination, and adventurous spirit.',
     zodiac: 'Aries',
     element: 'Fire',
     symbol: '♈',
