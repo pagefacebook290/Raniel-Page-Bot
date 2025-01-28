@@ -1,7 +1,7 @@
 const { sendMessage } = require('../handles/sendMessage');
 
  const zodiacFacts = {
-  'January 20': {
+  'January': {
     dates: 'January 20 - February 18.', 
     fact: 'Aquarians are known for their innovative, humanitarian, and independent spirit. They value freedom and originality, often thinking outside the box. Their unique perspectives and strong ideals make them natural leaders in social causes.',
     zodiac: 'Aquarius',
@@ -196,41 +196,7 @@ const { sendMessage } = require('../handles/sendMessage');
         
       }, 
       
-      'January 1': {
-        dates: 'December 22 - January 19.', 
-        fact: 'Capricorns are known for their discipline, ambition, and practicality. They are hardworking individuals who set high goals for themselves and are determined to achieve them. Their responsible nature often makes them reliable friends and colleagues.',
-        zodiac: 'Capricorn',
-        element: 'Earth',
-        symbol: '♑',
-        ruling_planet: 'Saturn',
-        personality_traits: [
-          'Disciplined',
-          'Responsible',
-          'Ambitious',
-          'Perfectionistic'
-          ],
-          best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
-          worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
-        
-      }, 
-      
-      'January 2': {
-        dates: 'December 22 - January 19.', 
-        fact: 'Capricorns are known for their discipline, ambition, and practicality. They are hardworking individuals who set high goals for themselves and are determined to achieve them. Their responsible nature often makes them reliable friends and colleagues.',
-        zodiac: 'Capricorn',
-        element: 'Earth',
-        symbol: '♑',
-        ruling_planet: 'Saturn',
-        personality_traits: [
-          'Disciplined',
-          'Responsible',
-          'Ambitious',
-          'Perfectionistic'
-          ],
-          best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
-          worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
-        
-      }
+
   
 };
 
