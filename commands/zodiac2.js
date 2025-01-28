@@ -70,7 +70,7 @@ function getZodiacSign(date) {
 }
 
 module.exports = {
-  name: 'zodiac',
+  name: 'zodiac2',
   description: 'Get information about a zodiac sign',
   usage: 'zodiac [date]',
   author: 'raniel',
