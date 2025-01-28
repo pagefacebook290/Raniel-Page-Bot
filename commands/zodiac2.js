@@ -1,7 +1,7 @@
 const { sendMessage } = require('../handles/sendMessage');
 
 const zodiacSigns = {
-  'Capricorn': { start: '12-22', end: '01-19' },
+  'December': { start: '12-22', end: '01-19' },
   'Aquarius': { start: '01-20', end: '02-18' },
   'Pisces': { start: '02-19', end: '03-20' },
   'Aries': { start: '03-21', end: '04-19' },
@@ -16,7 +16,7 @@ const zodiacSigns = {
 };
 
 const zodiacFacts = {
-  'Capricorn': {
+  'december': {
     dates: 'December 22 - January 19.',
     fact: 'Capricorns are known for their discipline, ambition, and practicality. They are hardworking individuals who set high goals for themselves and are determined to achieve them. Their responsible nature often makes them reliable friends and colleagues.',
     zodiac: 'Capricorn',
@@ -32,7 +32,7 @@ const zodiacFacts = {
     best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
     worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
   },
-  'Aquarius': {
+  'January': {
     dates: 'January 20 - February 18.',
     fact: 'Aquarians are known for their innovative, humanitarian, and independent spirit. They value freedom and originality, often thinking outside the box. Their unique perspectives and strong ideals make them natural leaders in social causes.',
     zodiac: 'Aquarius',
