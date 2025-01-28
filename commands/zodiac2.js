@@ -80,8 +80,16 @@ module.exports = {
     }
     const date = args[0];
     const sign = getZodiacSign(date);
+    if (!sign) {
+      return sendMessage(senderId, { text: 'Invalid date or zodiac sign not found.' }, pageAccessToken);
+    }
     const fact = zodiacFacts[sign];
-    const message = `Dates: ${fact.dates}\n\nZodiac: ${fact.zodiac}\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\nFacts: ${fact.fact}\n\nPersonality Traits:\n${fact.personality_traits.join(', ')}\n\nBest Matches: ${fact.best_matches.join(', ')}\n\nWorst Matches: ${fact.worst_matches.join(', ')}`;
-    sendMessage(senderId, { text: message }, pageAccessToken);
-  }
+    if (!fact) {
+  return sendMessage(senderId, { text: 'Zodiac sign not found.' }, pageAccessToken);
+}
+const message = `Dates: ${fact.dates}\n\nZodiac: ${fact.zodiac}\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\nFacts: ${fact.fact}\n\nPersonality Traits:\n${fact.personality_traits.join(', ')}\n\nBest Matches: ${fact.best_matches.join(', ')}\n\nWorst Matches: ${fact.worst_matches.join(', ')}`;
+sendMessage(senderId, { text: message }, pageAccessToken);
+
+}
 };
+
