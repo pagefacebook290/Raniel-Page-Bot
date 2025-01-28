@@ -1,3 +1,41 @@
+const { sendMessage } = require('../handles/sendMessage');
+
+const zodiacFacts = {
+  'January': {
+    dates: 'January 20 - February 18.',
+    fact: 'Aquarians are known for their innovative, humanitarian, and independent spirit. They value freedom and originality, often thinking outside the box. Their unique perspectives and strong ideals make them natural leaders in social causes.',
+    zodiac: 'Aquarius',
+    element: 'Air',
+    symbol: '',
+    ruling_planet: 'Uranus',
+    personality_traits: [
+      'Humanitarian',
+      'Independent',
+      'Unconventional',
+      'Rebellious'
+    ],
+    best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
+    worst_matches: ['Aries', 'Libra', 'Gemini']
+  },
+  'February': {
+    dates: 'February 19 - March 20.',
+    fact:'Pisceans are known for their compassion, creativity, and intuitive nature. They are sensitive individuals who often connect deeply with others emotions. Their artistic inclinations and dreamy disposition make them imaginative and empathetic.',
+    zodiac: 'Pisces',
+    element: 'Water',
+    symbol: '',
+    ruling_planet: 'Neptune',
+    personality_traits: [
+      'Compassionate',
+      'Intuitive',
+      'Creative',
+      'Sensitive'
+    ],
+    best_matches: ['Taurus', 'Cancer', 'Scorpio', 'Capricorn'],
+    worst_matches: ['Aries', 'Libra', 'Gemini']
+  },
+  // ...
+};
+
 const zodiacSigns = [
   { sign: 'Aquarius', start: 'January 20', end: 'February 18' },
   { sign: 'Pisces', start: 'February 19', end: 'March 20' },
@@ -33,7 +71,7 @@ function getZodiacSign(date) {
 
 module.exports = {
   name: 'zodiac',
-  description: 'Get the zodiac sign for a given date',
+  description: 'Get information about a zodiac sign',
   usage: 'zodiac [date]',
   author: 'raniel',
   async execute(senderId, args, pageAccessToken) {
@@ -42,7 +80,8 @@ module.exports = {
     }
     const date = args[0];
     const sign = getZodiacSign(date);
-    const message = `The zodiac sign for ${date} is ${sign}.`;
+    const fact = zodiacFacts[sign];
+    const message = `Dates: ${fact.dates}\n\nZodiac: ${fact.zodiac}\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\nFacts: ${fact.fact}\n\nPersonality Traits:\n${fact.personality_traits.join(', ')}\n\nBest Matches: ${fact.best_matches.join(', ')}\n\nWorst Matches: ${fact.worst_matches.join(', ')}`;
     sendMessage(senderId, { text: message }, pageAccessToken);
   }
 };
