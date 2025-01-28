@@ -1,4 +1,3 @@
-Narito ang modified na code na may kasamang mga facts:
 
 const { sendMessage } = require('../handles/sendMessage');
 
