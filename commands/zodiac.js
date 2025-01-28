@@ -194,6 +194,42 @@ const { sendMessage } = require('../handles/sendMessage');
           best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
           worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
         
+      }, 
+      
+      'January 1': {
+        dates: 'December 22 - January 19.', 
+        fact: 'Capricorns are known for their discipline, ambition, and practicality. They are hardworking individuals who set high goals for themselves and are determined to achieve them. Their responsible nature often makes them reliable friends and colleagues.',
+        zodiac: 'Capricorn',
+        element: 'Earth',
+        symbol: '♑',
+        ruling_planet: 'Saturn',
+        personality_traits: [
+          'Disciplined',
+          'Responsible',
+          'Ambitious',
+          'Perfectionistic'
+          ],
+          best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
+          worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
+        
+      }, 
+      
+      'January 2': {
+        dates: 'December 22 - January 19.', 
+        fact: 'Capricorns are known for their discipline, ambition, and practicality. They are hardworking individuals who set high goals for themselves and are determined to achieve them. Their responsible nature often makes them reliable friends and colleagues.',
+        zodiac: 'Capricorn',
+        element: 'Earth',
+        symbol: '♑',
+        ruling_planet: 'Saturn',
+        personality_traits: [
+          'Disciplined',
+          'Responsible',
+          'Ambitious',
+          'Perfectionistic'
+          ],
+          best_matches: ['Taurus', 'Virgo', 'Scorpio', 'Pisces'],
+          worst_matches: ['Aries', 'Libra', 'Sagittarius', 'Gemini']
+        
       }
   
 };
