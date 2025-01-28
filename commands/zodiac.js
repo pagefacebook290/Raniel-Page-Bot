@@ -212,7 +212,7 @@ const { sendMessage } = require('../handles/sendMessage');
     return sendMessage(senderId, { text: `Sorry, I don't have information about the zodiac sign for ${month}.` }, pageAccessToken);
   }
   const fact = zodiacFacts[month];
-  const message = `Symbol: ${fact.symbol}\n${fact.zodiac} (${fact.dates})\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\nPersonality Traits:\n${fact.personality_traits.join('\n, ')} ${fact.best_matches.join('\n, ')}\nWorst Matches: ${fact.worst_matches.join(', ')}\n\n${fact.fact}`;
+  const message = `${fact.fact}\n\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\n-Personality Traits:\n${fact.personality_traits.join(',\n')}\n-Best Matches ${fact.best_matches.join(',\n')}\n-Worst Matches: ${fact.worst_matches.join(',\n')}`;
 sendMessage(senderId, { text: message }, pageAccessToken);
 }
 };
