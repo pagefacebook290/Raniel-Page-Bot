@@ -119,7 +119,7 @@ const { sendMessage } = require('../handles/sendMessage');
     fact: 'Virgos are known for their practicality, attention to detail, and analytical nature. They often approach life with a methodical mindset and strive for perfection in their endeavors. Their critical thinking skills make them excellent problem solvers.',
     zodiac: 'Virgo',
     element: 'Earth',
-    symbol: 'virgo',
+    symbol: '♍',
     ruling_planet: 'Mercury',
     personality_traits: [
       'Practical',
