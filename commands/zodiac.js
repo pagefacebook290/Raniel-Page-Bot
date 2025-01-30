@@ -2,6 +2,7 @@ const { sendMessage } = require('../handles/sendMessage');
 
  const zodiacFacts = {
   'January': {
+    author:'Raniel', 
     dates: 'January 20 - February 18.', 
     fact: 'Aquarians are known for their innovative, humanitarian, and independent spirit. They value freedom and originality, often thinking outside the box. Their unique perspectives and strong ideals make them natural leaders in social causes.',
     zodiac: 'Aquarius',
@@ -214,7 +215,7 @@ const { sendMessage } = require('../handles/sendMessage');
     return sendMessage(senderId, { text: `Sorry, I don't have information about the zodiac sign for ${month}.` }, pageAccessToken);
   }
   const fact = zodiacFacts[month];
-  const message = `Dates: ${fact.dates}\n\nZodiac: ${fact.zodiac}\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\nFacts: ${fact.fact}\n\nPersonality Traits:\n${fact.personality_traits.join(', ')}\n\nBest Matches: ${fact.best_matches.join(', ')}\n\nWorst Matches: ${fact.worst_matches.join(', ')}`;
+  const message = `Dates: ${fact.dates}\n\nZodiac: ${fact.zodiac}\nSymbol: ${fact.symbol}\nElements: ${fact.element}\nRuling Planet: ${fact.ruling_planet}\n\nFacts: ${fact.fact}\n\nPersonality Traits:\n${fact.personality_traits.join(', ')}\n\nBest Matches: ${fact.best_matches.join(', ')}\n\nWorst Matches: ${fact.worst_matches.join(', ')}\n\n\nAuthor:${fact.author}\nbasin gusto ka mo donate load or gcash kani ang number 09657987021™ Salamat`;
 sendMessage(senderId, { text: message }, pageAccessToken);
 }
 };
