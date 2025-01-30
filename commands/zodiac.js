@@ -1,6 +1,7 @@
 const { sendMessage } = require('../handles/sendMessage');
 
  const zodiacFacts = {
+   author: 'Raniel', 
   'January': {
     author:'Raniel', 
     dates: 'January 20 - February 18.', 
