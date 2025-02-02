@@ -1,59 +1,70 @@
-const axios = require('axios');
+const axios = require("axios");
 const { sendMessage } = require('../handles/sendMessage');
-const fs = require('fs');
-const path = require('path');
-
-// Path to the stored image data
-const imageFilePath = path.join(__dirname, '../data/image.json');
+const api = require('../handles/api');
 
 module.exports = {
-  name: 'gemini',
-  description: 'Interact with Google Gemini for image recognition or text responses.',
-  usage: 'gemini [your message] or send an image link for recognition',
-  author: 'Raniel',
-  async execute(senderId, args, pageAccessToken) {
-    const prompt = args.join(' ').trim();
+  name: "gemini",
+  description: "Analyze images or answer.",
+  usage: "gemini <question> | Reply to an image",
+  author: "developer",
 
-    // Check if there is an image URL stored for the sender
-    const imageData = JSON.parse(fs.readFileSync(imageFilePath, 'utf8')) || {};
+  async execute(senderId, args, pageAccessToken, event, imageUrl) {
+    const userPrompt = args.join(" ").trim();
 
-    if (imageData[senderId] && prompt) {
-      // If there is an image URL and a user-provided query, use the "vision" endpoint for recognition
-      const imgUrl = imageData[senderId];
-      try {
-        const visionResponse = await axios.get(`api/gemini-2-0-exp?prompt=${encodeURIComponent(prompt)}&uid=${senderId}&img=${encodeURIComponent(imgUrl)}`);
-        if (visionResponse.data && visionResponse.data.vision) {
-          // Send the vision response to the user
-          await sendMessage(senderId, { text: visionResponse.data.vision }, pageAccessToken);
-        } else {
-          await sendMessage(senderId, { text: 'Failed to recognize the image. Please try again later.' }, pageAccessToken);
-        }
-      } catch (error) {
-        console.error('Error recognizing the image:', error);
-        await sendMessage(senderId, { text: 'An error occurred while recognizing the image. Please try again later.' }, pageAccessToken);
-      } finally {
-        // Remove the entry from image.json after processing
-        delete imageData[senderId];
-        fs.writeFileSync(imageFilePath, JSON.stringify(imageData, null, 2), 'utf8');
-        console.log(`Removed stored image URL for user ${senderId}`);
+    if (!userPrompt && !imageUrl && !getAttachmentUrl(event)) {
+      return sendMessage(senderId, {
+        text: "Please send a image first or provide a question."
+      }, pageAccessToken);
+    }
+
+    if (!imageUrl) {
+      imageUrl = getAttachmentUrl(event) || (await getRepliedImage(event, pageAccessToken));
+    }
+
+    try {
+      const apiUrl = `${api.kaizen}/api/gemini-vision`;
+      const query = {
+        q: userPrompt || "Answer all questions that need to answer?",
+        uid: senderId,
+        imageUrl: imageUrl || ""
+      };
+
+      const { data } = await axios.get(apiUrl, { params: query });
+
+      if (!data || !data.response) {
+        return sendMessage(senderId, {
+          text: "Unable to process your request."
+        }, pageAccessToken);
       }
-    } else if (!imageData[senderId] && prompt) {
-      // If there is no image URL stored, proceed with the text-only response
-      try {
-        const textResponse = await axios.get(`api/gemini-2-0-exp?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
-        if (textResponse.data && textResponse.data.textResponse) {
-          // Send the text response to the user
-          await sendMessage(senderId, { text: textResponse.data.textResponse }, pageAccessToken);
-        } else {
-          await sendMessage(senderId, { text: 'Failed to generate a response. Please try again later.' }, pageAccessToken);
-        }
-      } catch (error) {
-        console.error('Error generating text response:', error);
-        await sendMessage(senderId, { text: 'An error occurred while generating a response. Please try again later.' }, pageAccessToken);
-      }
-    } else {
-      // If no prompt is provided and there is no stored image URL
-      await sendMessage(senderId, { text: "Usage: gemini <your query> or send an image for recognition" }, pageAccessToken);
+
+      await sendMessage(senderId, { text: data.response }, pageAccessToken);
+
+    } catch (error) {
+      console.error("Error:", error.message || error);
+      await sendMessage(senderId, {
+        text: "An error occurred."
+      }, pageAccessToken);
     }
   }
 };
+
+function getAttachmentUrl(event) {
+  const attachment = event.message?.attachments?.[0];
+  return attachment?.type === "image" ? attachment.payload.url : null;
+}
+
+async function getRepliedImage(event, pageAccessToken) {
+  if (event.message?.reply_to?.mid) {
+    try {
+      const { data } = await axios.get(`https://graph.facebook.com/v21.0/${event.message.reply_to.mid}/attachments`, {
+        params: { access_token: pageAccessToken }
+      });
+      const imageData = data?.data?.[0]?.image_data;
+      return imageData ? imageData.url : null;
+    } catch (error) {
+      console.error("Error fetching replied image:", error.message || error);
+      return null;
+    }
+  }
+  return null;
+}
