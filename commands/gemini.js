@@ -22,7 +22,7 @@ module.exports = {
       // If there is an image URL and a user-provided query, use the "vision" endpoint for recognition
       const imgUrl = imageData[senderId];
       try {
-        const visionResponse = await axios.get(`https://jerome-web.onrender.com/service/api/gemini?ask=${encodeURIComponent(prompt)}&imgurl=${encodeURIComponent(imgUrl)}`);
+        const visionResponse = await axios.get(`api/gemini-2-0-exp?prompt=hi what is this image&uid=1&img=${encodeURIComponent(prompt)}&imgurl=${encodeURIComponent(imgUrl)}`);
 
         if (visionResponse.data && visionResponse.data.vision) {
           // Send the vision response to the user
