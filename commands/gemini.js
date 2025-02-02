@@ -1,6 +1,5 @@
 const axios = require("axios");
 const { sendMessage } = require('../handles/sendMessage');
-const api = require('../handles/api');
 
 module.exports = {
   name: "gemini",
