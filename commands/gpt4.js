@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { sendmessage } = require('../handles/sendmessage');
+const { sendmessage } = require('./handles/sendmessage');
 
 module.exports = {
   name: 'gpt4',
