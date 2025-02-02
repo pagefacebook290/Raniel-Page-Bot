@@ -11,7 +11,6 @@ module.exports = {
   description: 'Interact with Google Gemini for image recognition or text responses.',
   usage: 'gemini [your message] or send an image link for recognition',
   author: 'Raniel',
-
   async execute(senderId, args, pageAccessToken) {
     const prompt = args.join(' ').trim();
 
@@ -22,8 +21,7 @@ module.exports = {
       // If there is an image URL and a user-provided query, use the "vision" endpoint for recognition
       const imgUrl = imageData[senderId];
       try {
-        const visionResponse = await axios.get(`api/gemini-2-0-exp?prompt=hi what is this image&uid=1&img=${encodeURIComponent(prompt)}&imgurl=${encodeURIComponent(imgUrl)}`);
-
+        const visionResponse = await axios.get(`api/gemini-2-0-exp?prompt=${encodeURIComponent(prompt)}&uid=${senderId}&img=${encodeURIComponent(imgUrl)}`);
         if (visionResponse.data && visionResponse.data.vision) {
           // Send the vision response to the user
           await sendMessage(senderId, { text: visionResponse.data.vision }, pageAccessToken);
@@ -42,8 +40,7 @@ module.exports = {
     } else if (!imageData[senderId] && prompt) {
       // If there is no image URL stored, proceed with the text-only response
       try {
-        const textResponse = await axios.get(`https://jerome-web.onrender.com/service/api/gemini?ask=${encodeURIComponent(prompt)}&imgurl=`);
-
+        const textResponse = await axios.get(`api/gemini-2-0-exp?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
         if (textResponse.data && textResponse.data.textResponse) {
           // Send the text response to the user
           await sendMessage(senderId, { text: textResponse.data.textResponse }, pageAccessToken);
