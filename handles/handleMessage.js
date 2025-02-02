@@ -28,7 +28,7 @@ function queueImageProcessing(senderId, imageUrl, pageAccessToken, event) {
   setTimeout(async () => {
     const item = imageProcessingQueue.get(senderId);
     if (item && !item.processed) {
-      const geminiCommand = commands.get('ai');
+      const geminiCommand = commands.get('gpt4');
       await geminiCommand.execute(senderId, [], pageAccessToken, event, imageUrl);
       imageProcessingQueue.delete(senderId);
     }
@@ -68,7 +68,7 @@ async function handleMessage(event, pageAccessToken) {
       const lastImage = lastImageByUser.get(senderId);
       const lastVideo = lastVideoByUser.get(senderId);
 
-      if ([ 'ai'].includes(command.name)) {
+      if ([ 'gpt4'].includes(command.name)) {
         const mediaUrl = lastImage || lastVideo;
         if (mediaUrl) {
           const queueItem = imageProcessingQueue.get(senderId);
@@ -91,7 +91,7 @@ async function handleMessage(event, pageAccessToken) {
           console.error('Failed to get reply attachments:', error);
         }
       }
-      await commands.get('ai').execute(senderId, [messageText], pageAccessToken, event, imageUrl);
+      await commands.get('gpt4').execute(senderId, [messageText], pageAccessToken, event, imageUrl);
       if (imageUrl) lastImageByUser.delete(senderId);
     }
   } catch (error) {
