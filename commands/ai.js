@@ -4,7 +4,7 @@ const { sendMessage } = require('../handles/sendMessage');
 module.exports = {
   name: "ai",
   description: "Analyze images or answer.",
-  usage: "gpt4 <question> | Reply to an image",
+  usage: "ai <question> | Reply to an image",
   author: "Mark",
 
   async execute(senderId, args, pageAccessToken, event, imageUrl) {
@@ -30,7 +30,7 @@ module.exports = {
 
       const { data } = await axios.get(apiUrl, { params: query });
 
-      if (!data || !data.response) {
+      if (!data || !data.reply) {
         return sendMessage(senderId, {
           text: "Unable to process your request."
         }, pageAccessToken);
@@ -67,4 +67,3 @@ async function getRepliedImage(event, pageAccessToken) {
   }
   return null;
 }
-

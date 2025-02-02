@@ -30,7 +30,7 @@ module.exports = {
 
       const { data } = await axios.get(apiUrl, { params: query });
 
-      if (!data || !data.response) {
+      if (!data || !data.reply) {
         return sendMessage(senderId, {
           text: "Unable to process your request."
         }, pageAccessToken);
@@ -67,4 +67,3 @@ async function getRepliedImage(event, pageAccessToken) {
   }
   return null;
 }
-
