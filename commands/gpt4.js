@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`api/4ov2?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`api/deepseek?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
