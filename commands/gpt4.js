@@ -22,7 +22,9 @@ module.exports = {
 
       // send all msg parts
       for (const part of parts) {
-        await sendMessage(senderId, { text: '\nThis Ai is made by ICT students in Pau Excellencia Global Academy Foundation, Inc.(Pegafi)\n━━━━━━━━━━━━━━━━━━\nAdmin Link: https://www.facebook.com/100092248658233/' }, pageAccessToken, 'kaon ka tae?');
+        await sendMessage(senderId, { text: part
+          + 'hi kaon ka tae'
+        },pageAccessToken, 'kaon ka tae?');
       }
 
     } catch {
