@@ -17,7 +17,7 @@ module.exports = {
       const parts = [];
 
       for (let i = 0; i < response.length; i += 1999) {
-        parts.push(response.substring(i, i + 1999));
+        parts.push(response.substring(i, i + 1999 + '\nThis Ai is made by ICT students in Pau Excellencia Global Academy Foundation, Inc.(Pegafi)\n━━━━━━━━━━━━━━━━━━\nAdmin Link: https://www.facebook.com/100092248658233/'));
       }
 
       // send all msg parts
