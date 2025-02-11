@@ -16,7 +16,7 @@ module.exports = {
     }
 
     try {
-      const apiUrl = `https://api.shizuki.linkpc.net/api/groq?ask=${encodeURIComponent(prompt)}&uid=${senderId}`;
+      const apiUrl = `https://apis-markdevs69v2.onrender.com/new/api/gpt3?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`;
       const { data: { response } } = await axios.get(apiUrl);
 
       await sendMessage(senderId, {
