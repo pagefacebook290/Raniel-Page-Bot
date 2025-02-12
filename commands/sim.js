@@ -22,7 +22,7 @@ module.exports = {
     }
     
     try {
-      const response = await axios.get(`https://betadash-api-swordslush.vercel.app/?fbclid=${encodeURIComponent(prompt)}`);
+      const response = await axios.get(`https://hiroshi-api.onrender.com/other/sim?ask=hi${encodeURIComponent(prompt)}`);
       const geminiResponse = response.data.gemini;
       
       sendMessage(senderId, { text: geminiResponse }, pageAccessToken);
