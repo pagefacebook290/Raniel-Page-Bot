@@ -22,7 +22,7 @@ module.exports = {
     }
     
     try {
-      const response = await axios.get(`https://hiroshi-api.onrender.com/other/sim?ask=${encodeURIComponent(prompt)}`);
+      const response = await axios.get(`https://markdevs-last-api-p2y6.onrender.com/sim?q=${encodeURIComponent(prompt)}`);
       const geminiResponse = response.data.gemini;
       
       sendMessage(senderId, { text: geminiResponse }, pageAccessToken);
