@@ -13,7 +13,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: besh <prompt>" }, pageAccessToken);
 
     try {
-       const { data } = await axios.get(`https://api.kenliejugarap.com/unity/?question=${encodeURIComponent(prompt)}`);
+       const { data } = await axios.get(`https://markdevs-last-api-p2y6.onrender.com/ashley?prompt=${encodeURIComponent(prompt)}&uid=1`);
       
       sendMessage(senderId, { text: data.response }, pageAccessToken);
     } catch {
