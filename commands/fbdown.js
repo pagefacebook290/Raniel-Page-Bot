@@ -7,7 +7,7 @@ module.exports = {
   name: 'fbdown',
   description: 'Download Facebook video',
   usage: 'fbdownloader <video link>',
-  author: 'Rized',
+  author: 'raniel',
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const videoLink = args.join(' ');
@@ -17,7 +17,7 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://betadash-search-download.vercel.app/fbdl?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/fbdl?url=${encodeURIComponent(videoLink)}`);
       const videoUrl = response.data;
 
       if (!videoUrl) {
