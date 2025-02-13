@@ -24,17 +24,7 @@ module.exports = {
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
 
-      const videoMessage = {
-        attachment: {
-          type: 'video',
-          payload: {
-            url: videoUrl,
-          }
-        }
-      };
-
-      await sendMessage(senderId, { text: 'Downloading...' }, pageAccessToken);
-      await sendMessage(senderId, videoMessage, pageAccessToken);
+      sendMessage(senderId, { text: 'Video link: ' + videoUrl }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
       sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
