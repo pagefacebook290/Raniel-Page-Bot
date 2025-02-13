@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://api.shizuki.linkpc.net/api/groq?ask=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`api/claude3-5-haiku?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
