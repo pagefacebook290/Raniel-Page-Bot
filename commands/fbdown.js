@@ -18,13 +18,13 @@ module.exports = {
 
     try {
       const response = await axios.get(`https://kaiz-apis.gleeze.com/api/fbdl?url=${encodeURIComponent(videoLink)}`);
-      const videoUrl = response.data;
+      const videoData = JSON.stringify(response.data);
 
-      if (!videoUrl) {
+      if (!videoData) {
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
 
-      sendMessage(senderId, { text: 'Video link: ' + videoUrl }, pageAccessToken);
+      sendMessage(senderId, { text: 'Video data: ' + videoData }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
       sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
