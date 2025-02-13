@@ -13,11 +13,11 @@ module.exports = {
       }, pageAccessToken);
     }
 
-    const [phone, count] = args.join(' ').split('|').map(arg => arg.trim());
+    const [phone, count] = args.join(' ').split(' ').map(arg => arg.trim());
 
     if (!phone || !count || isNaN(count)) {
       return sendMessage(senderId, {
-        text: 'Invalid input. Please provide a valid phone number and a numeric count. Usage: sms <number> | <count>',
+        text: 'Invalid input. Please provide a valid phone number and a numeric count. Usage: sms <number>   <count>',
       }, pageAccessToken);
     }
 
