@@ -29,7 +29,6 @@ module.exports = {
           type: 'video',
           payload: {
             url: videoUrl,
-            is_reusable: true
           }
         }
       };
