@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/gpt-4o?ask=${encodeURIComponent(prompt)}&uid=${senderId}&webSearch=off`);
+      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/hercai?ask=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
@@ -23,7 +23,6 @@ module.exports = {
       // send all msg parts
       for (const part of parts) {
         await sendMessage(senderId, { text: part
-          + '\n\n━━━━━━━━━━━━━━━\nThis Ai is made by ICT students in Pau Excellencia Global Academy Foundation, Inc.(Pegafi)\n━━━━━━━━━━━━━━━\nAdmin Link: https://www.facebook.com/100092248658233/'
         },pageAccessToken, 'kaon ka tae?');
       }
 
