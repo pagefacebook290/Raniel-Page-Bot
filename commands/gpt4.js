@@ -1,4 +1,4 @@
- const axios = require('axios');
+const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/hercai?ask=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`http://zaikyoo.onrender.com/docs?fbclid=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
@@ -22,8 +22,7 @@ module.exports = {
 
       // send all msg parts
       for (const part of parts) {
-        await sendMessage(senderId, { text: part
-        },pageAccessToken, 'kaon ka tae?');
+        await sendMessage(senderId, { text: part }, pageAccessToken, ' Sending...');
       }
 
     } catch {
@@ -31,5 +30,3 @@ module.exports = {
     }
   }
 };
-
- 
