@@ -17,11 +17,11 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://tiktok-downloader-api.vercel.app/api/download?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
 
       if (videoData.success) {
-        const videoUrl = videoData.data[0].url;
+        const videoUrl = videoData.data;
         sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
       } else {
         sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
