@@ -13,7 +13,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: humanizer <question or text>" }, pageAccessToken);
 
     try {
-       const { data } = await axios.get(`https://kaiz-apis.gleeze.com/api/humanizer?q=${encodeURIComponent(prompt)}`);
+       const { data } = await axios.get(`${encodeURIComponent(prompt)}`);
       
       sendMessage(senderId, { text: data.extract }, pageAccessToken);
     } catch {

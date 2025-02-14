@@ -1,40 +1,33 @@
-
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
+const fs = require('fs');
+const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
-name: 'eabab',
-usage: 'eabab',
-description: 'Generate a random girl video.',
-author: 'Jerome',
-async execute(senderId, args, pageAccessToken, sendMessage) {
-try {
-const apiUrl = 'https://hiroshi-api.onrender.com/video/eabab';
-const response = await axios.get(apiUrl);
-const videoUrl = response.data.link;
-const title = response.data.title;
-const username = response.data.username;
-const displayname = response.data.displayname;
+  name: 'humanize',
+  description: 'Convert text to human voice',
+  usage: 'humanize <text>',
+  author: 'raniel',
+  execute: async (senderId, args) => {
+    const pageAccessToken = token;
+    const text = args.join(' ');
 
-  const message = `Title: ${title}\nUsername: ${username}\nDisplay Name: ${displayname}\n\n𝕯𝖔𝖜𝖓𝖑𝖔𝖆𝖉𝖎𝖓𝖌 𝕻𝖑𝖊𝖆𝖘𝖊 𝖂𝖆𝖎𝖙...
-`;
-  await sendMessage(senderId, { text: message }, pageAccessToken);
+    if (!text) {
+      return sendMessage(senderId, { text: 'Usage: humanizer <text>' }, pageAccessToken);
+    }
 
-  const videoMessage = {
-    attachment: {
-      type: 'video',
-      payload: {
-        url: videoUrl,
-      },
-    },
-  };
-  await sendMessage(senderId, videoMessage, pageAccessToken);
-} catch (error) {
-  console.error('Error:', error.message);
-  sendMessage(senderId, {
-    text: 'Sorry, there was an error generating the video. Please try again later.',
-  }, pageAccessToken);
-}
+    try {
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/humanizer?q=${encodeURIComponent(text)}`);
+      const audioUrl = response.data.audioUrl;
 
-},
+      if (!audioUrl) {
+        return sendMessage(senderId, { text: 'Failed to generate audio.' }, pageAccessToken);
+      }
+
+      sendMessage(senderId, { attachment: { type: 'audio', payload: { url: audioUrl } } }, pageAccessToken);
+    } catch (error) {
+      console.error('Error:', error.message);
+      sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
+    }
+  }
 };
