@@ -17,7 +17,7 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://tiktok-downloader-api.vercel.app/api/download?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://ssstik.io/api/?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
 
       if (videoData.success) {
