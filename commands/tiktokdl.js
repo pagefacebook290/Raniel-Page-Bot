@@ -18,10 +18,12 @@ module.exports = {
 
     try {
       const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
+      console.log('Response Data:', response.data);
       const videoData = response.data;
       const videoUrl = videoData.videoUrl;
 
       if (!videoUrl) {
+        console.log('Error: Video URL not found.');
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
 
