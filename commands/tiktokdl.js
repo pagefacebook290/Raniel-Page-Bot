@@ -17,10 +17,9 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
-      console.log('Response Data:', response.data);
+      const response = await axios.get(`https://api.tiktok.com/v1/aweme/v1/aweme/bulletin/detail/?aweme_id=${videoLink.split('/')[videoLink.split('/').length - 1].split('?')[0]}`);
       const videoData = response.data;
-      const videoUrl = videoData.videoUrl;
+      const videoUrl = videoData.aweme_detail.video.play_addr.url_list[0];
 
       if (!videoUrl) {
         console.log('Error: Video URL not found.');
