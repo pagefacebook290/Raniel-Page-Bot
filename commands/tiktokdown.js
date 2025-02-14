@@ -17,7 +17,7 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://tikmate.app/api/download?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
       const videoUrl = videoData.videoUrl;
 
