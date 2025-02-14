@@ -19,13 +19,13 @@ module.exports = {
     try {
       const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
-      const videoUrl = videoData.videoUrl;
 
-      if (!videoUrl) {
-        return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
+      if (videoData.status === 'success') {
+        const videoUrl = videoData.data;
+        sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
+      } else {
+        sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
-
-      sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
       sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
