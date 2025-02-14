@@ -12,9 +12,9 @@ module.exports = {
     if (cmd === 'gen') {
       try {
         const response = await axios.get('https://kaiz-apis.gleeze.com/api/tempmail-create');
-        console.log('Response Data:', response.data);
-        const emailAddress = response.data;
-        return sendMessage(senderId, { text: ` Temporary Email: ${emailAddress}` }, pageAccessToken);
+        const emailAddress = response.data.address;
+        const token = response.data.token;
+        return sendMessage(senderId, { text: ` Temporary Email: ${emailAddress}\nToken: ${token}\nCheck inbox: https://kaiz-apis.gleeze.com/tempmail-inbox?token=${token}` }, pageAccessToken);
       } catch (error) {
         console.error('Error:', error.message);
         return sendMessage(senderId, { text: 'Error: Unable to generate temporary email.' }, pageAccessToken);
@@ -24,8 +24,7 @@ module.exports = {
     if (cmd === 'inbox' && email) {
       try {
         const token = email.split('@')[0];
-        const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tempmail-inbox?token=${token}`);
-        console.log('Response Data:', response.data);
+        const response = await axios.get(`https://kaiz-apis.gleeze.com/tempmail-inbox?token=${token}`);
         const inbox = response.data;
         if (!inbox.length) return sendMessage(senderId, { text: 'Inbox is empty.' }, pageAccessToken);
         const latestEmail = inbox[0];
