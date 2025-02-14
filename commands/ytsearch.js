@@ -19,7 +19,7 @@ module.exports = {
     try {
       const response = await axios.get(`https://kaiz-apis.gleeze.com/api/ytsearch?q=${encodeURIComponent(searchQuery)}`);
       const searchData = response.data;
-
+      console.log('Search Data:', searchData); // <--- Added this line
       if (!searchData || searchData.length === 0) {
         return sendMessage(senderId, { text: 'No results found.' }, pageAccessToken);
       }
