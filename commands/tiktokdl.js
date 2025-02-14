@@ -17,9 +17,9 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://tiktok-api.vercel.app/api/video?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://api.tikmate.app/api/convert?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
-      const videoUrl = videoData.videoUrl;
+      const videoUrl = videoData.result;
 
       if (!videoUrl) {
         console.log('Error: Video URL not found.');
