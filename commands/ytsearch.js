@@ -38,7 +38,8 @@ module.exports = {
             listener.remove();
           }
         };
-        listener.add();
+        // Replace listener.add() with on('message', listener)
+        on('message', listener);
       });
 
       if (!userResponse) {
