@@ -1,44 +1,55 @@
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
+const fs = require('fs');
+const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
   name: 'ytsearch',
-  description: 'Search YouTube videos.',
-  usage: 'ytsearch [video URL atau search query]',
-  author: 'Your Name',
-  async execute(senderId, args, pageAccessToken) {
-    if (!args.length) {
-      return sendMessage(senderId, { text: 'Please provide a search query or URL.' }, pageAccessToken);
+  description: 'Search YouTube video',
+  usage: 'ytsearch <search query>',
+  author: 'raniel',
+  execute: async (senderId, args) => {
+    const pageAccessToken = token;
+    const searchQuery = args.join(' ');
+
+    if (!searchQuery) {
+      return sendMessage(senderId, { text: 'Usage: ytsearch <search query>' }, pageAccessToken);
     }
 
     try {
-      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/ytsearch?q=${encodeURIComponent(args.join(' '))}`);
-      const data = response.data;
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/ytsearch?q=${encodeURIComponent(searchQuery)}`);
+      const searchData = response.data;
 
-      if (data.error) {
-        return sendMessage(senderId, { text: `Error: ${data.error}\nParameter: ${data.parameter}` }, pageAccessToken);
+      if (!searchData || searchData.length === 0) {
+        return sendMessage(senderId, { text: 'No results found.' }, pageAccessToken);
       }
 
-      if (!data[0] || !data[0].url) {
-        return sendMessage(senderId, { text: 'Video tidak ditemukan.' }, pageAccessToken);
+      const videoOptions = searchData.map((video, index) => {
+        return `${index + 1}. ${video.title} (${video.size})`;
+      }).join('\n');
+
+      sendMessage(senderId, { text: `Search results:\n\n${videoOptions}\n\nPlease reply with the number of your chosen video.` }, pageAccessToken);
+
+      // Wait for user response
+      const userResponse = await getMessage(senderId);
+
+      if (!userResponse) {
+        return;
       }
 
-      const video = data[0];
-      const videoMessage = {
-        attachment: {
-          type: 'video',
-          payload: {
-            url: video.Url,
-            is_reusable: true
-          }
-        }
-      };
+      const chosenNumber = parseInt(userResponse.text);
 
-      await sendMessage(senderId, videoMessage, pageAccessToken);
-      sendMessage(senderId, { text: `Judul: ${video.title}` }, pageAccessToken);
+      if (isNaN(chosenNumber) || chosenNumber < 1 || chosenNumber > searchData.length) {
+        return sendMessage(senderId, { text: 'Invalid choice.' }, pageAccessToken);
+      }
+
+      const chosenVideo = searchData[chosenNumber - 1];
+      const videoUrl = chosenVideo.url;
+
+      sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
     } catch (error) {
-      console.error(error);
-      sendMessage(senderId, { text: 'Sorry, an error occurred.' }, pageAccessToken);
+      console.error('Error:', error.message);
+      sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
     }
   }
 };

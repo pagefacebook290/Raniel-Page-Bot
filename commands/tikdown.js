@@ -1,48 +1,34 @@
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
+const fs = require('fs');
+const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
-  name: 'tikdownload',
-  usage: 'tikdownload <url>',
-  description: 'Download a TikTok video from the provided URL.',
-  author: 'Jerome',
-  async execute(senderId, args, pageAccessToken, sendMessage) {
-    if (args.length < 1) {
-      return sendMessage(senderId, {
-        text: 'Please provide a TikTok video URL.',
-      }, pageAccessToken);
-    }
+  name: 'tiktokdown',
+  description: 'Download TikTok video',
+  usage: 'tiktokdown <video link>',
+  author: 'raniel',
+  execute: async (senderId, args) => {
+    const pageAccessToken = token;
+    const videoLink = args.join(' ');
 
-    const videoUrl = args[0];
-    const apiUrl = `https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoUrl)}`;
+    if (!videoLink) {
+      return sendMessage(senderId, { text: 'Usage: tiktok <video link>' }, pageAccessToken);
+    }
 
     try {
-      const response = await axios.get(apiUrl);
-      const videoLink = response.data.link; // Siguraduhing tama ang key na ginagamit mo mula sa response
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
+      const videoData = response.data;
+      const videoUrl = videoData.videoUrl;
 
-      if (!videoLink) {
-        return sendMessage(senderId, {
-          text: 'Sorry, I could not retrieve the video. Please check the URL and try again.',
-        }, pageAccessToken);
+      if (!videoUrl) {
+        return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
 
-      const message = `Here is your TikTok video:\n${videoLink}`;
-      await sendMessage(senderId, { text: message }, pageAccessToken);
-
-      const videoMessage = {
-        attachment: {
-          type: 'video',
-          payload: {
-            url: videoLink,
-          },
-        },
-      };
-      await sendMessage(senderId, videoMessage, pageAccessToken);
+      sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
-      sendMessage(senderId, {
-        text: 'Sorry, there was an error downloading the video. Please try again later.',
-      }, pageAccessToken);
+      sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
     }
-  },
+  }
 };
