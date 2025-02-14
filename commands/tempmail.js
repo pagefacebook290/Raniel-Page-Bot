@@ -13,8 +13,7 @@ module.exports = {
       try {
         const response = await axios.get('https://kaiz-apis.gleeze.com/api/tempmail-create');
         const emailAddress = response.data.address;
-        const token = response.data.token;
-        return sendMessage(senderId, { text: ` Temporary Email: ${emailAddress}\nToken: ${token}\nCheck inbox: https://kaiz-apis.gleeze.com/tempmail-inbox?token=${token}` }, pageAccessToken);
+        return sendMessage(senderId, { text: ` Temporary Email: ${emailAddress}` }, pageAccessToken);
       } catch (error) {
         console.error('Error:', error.message);
         return sendMessage(senderId, { text: 'Error: Unable to generate temporary email.' }, pageAccessToken);
