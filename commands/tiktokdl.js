@@ -20,8 +20,8 @@ module.exports = {
       const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
 
-      if (videoData.status === 'success') {
-        const videoUrl = videoData.data;
+      if (videoData.success) {
+        const videoUrl = videoData.data[0].url;
         sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
       } else {
         sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
