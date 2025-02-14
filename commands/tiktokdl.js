@@ -17,9 +17,9 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://api.tiktok.com/v1/aweme/v1/aweme/bulletin/detail/?aweme_id=${videoLink.split('/')[videoLink.split('/').length - 1].split('?')[0]}`);
+      const response = await axios.get(`https://tiktok-api.vercel.app/api/video?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
-      const videoUrl = videoData.aweme_detail.video.play_addr.url_list[0];
+      const videoUrl = videoData.videoUrl;
 
       if (!videoUrl) {
         console.log('Error: Video URL not found.');
