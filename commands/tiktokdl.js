@@ -17,9 +17,9 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://api.tikmate.app/api/convert?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/tiktok-dl?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
-      const videoUrl = videoData.result;
+      const videoUrl = videoData.videoUrl;
 
       if (!videoUrl) {
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
