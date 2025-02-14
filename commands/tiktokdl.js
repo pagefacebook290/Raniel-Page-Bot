@@ -22,7 +22,6 @@ module.exports = {
       const videoUrl = videoData.result;
 
       if (!videoUrl) {
-        console.log('Error: Video URL not found.');
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
 
