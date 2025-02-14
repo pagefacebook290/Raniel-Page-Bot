@@ -17,10 +17,10 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://ssstik.io/api/?url=${encodeURIComponent(videoLink)}`);
+      const response = await axios.get(`https://api.tikdler.com/api/download?url=${encodeURIComponent(videoLink)}`);
       const videoData = response.data;
 
-      if (videoData.success) {
+      if (videoData.status === 'success') {
         const videoUrl = videoData.data;
         sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
       } else {
