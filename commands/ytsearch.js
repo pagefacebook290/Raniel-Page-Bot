@@ -31,7 +31,15 @@ module.exports = {
       sendMessage(senderId, { text: `Search results:\n\n${videoOptions}\n\nPlease reply with the number of your chosen video.` }, pageAccessToken);
 
       // Wait for user response
-      const userResponse = await getMessage(senderId);
+      const userResponse = await new Promise((resolve) => {
+        const listener = (message) => {
+          if (message.senderId === senderId) {
+            resolve(message);
+            listener.remove();
+          }
+        };
+        listener.add();
+      });
 
       if (!userResponse) {
         return;
