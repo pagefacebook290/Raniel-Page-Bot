@@ -9,7 +9,7 @@ description: 'Generate a random girl video.',
 author: 'Jerome',
 async execute(senderId, args, pageAccessToken, sendMessage) {
 try {
-const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti';
+const apiUrl = 'https://hiroshi-api.onrender.com/video/eabab';
 const response = await axios.get(apiUrl);
 const videoUrl = response.data.link;
 const title = response.data.title;

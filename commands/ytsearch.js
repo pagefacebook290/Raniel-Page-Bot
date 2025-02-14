@@ -19,13 +19,13 @@ module.exports = {
     try {
       const response = await axios.get(`https://kaiz-apis.gleeze.com/api/ytsearch?q=${encodeURIComponent(searchQuery)}`);
       const searchData = response.data;
-      console.log('Search Data:', searchData); // <--- Added this line
-      if (!searchData || searchData.length === 0) {
+
+      if (!searchData) {
         return sendMessage(senderId, { text: 'No results found.' }, pageAccessToken);
       }
 
-      const videoOptions = searchData.map((video, index) => {
-        return `${index + 1}. ${video.title} (${video.size})`;
+      const videoOptions = Object.keys(searchData).map((key, index) => {
+        return `${index + 1}. ${searchData[key].title} (${searchData[key].duration})`;
       }).join('\n');
 
       sendMessage(senderId, { text: `Search results:\n\n${videoOptions}\n\nPlease reply with the number of your chosen video.` }, pageAccessToken);
@@ -39,12 +39,13 @@ module.exports = {
 
       const chosenNumber = parseInt(userResponse.text);
 
-      if (isNaN(chosenNumber) || chosenNumber < 1 || chosenNumber > searchData.length) {
+      if (isNaN(chosenNumber) || chosenNumber < 1 || chosenNumber > Object.keys(searchData).length) {
         return sendMessage(senderId, { text: 'Invalid choice.' }, pageAccessToken);
       }
 
-      const chosenVideo = searchData[chosenNumber - 1];
-      const videoUrl = chosenVideo.url;
+      const chosenVideoKey = Object.keys(searchData)[chosenNumber - 1];
+      const chosenVideo = searchData[chosenVideoKey];
+      const videoUrl = `https://www.youtube.com/watch?v=${chosenVideo.videoId}`;
 
       sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
     } catch (error) {
