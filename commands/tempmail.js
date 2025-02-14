@@ -24,6 +24,7 @@ module.exports = {
       try {
         const token = email.split('@')[0];
         const response = await axios.get(`https://kaiz-apis.gleeze.com/tempmail-inbox?token=${token}`);
+        console.log('Response Data:', response.data);
         const inbox = response.data;
         if (!inbox.length) return sendMessage(senderId, { text: 'Inbox is empty.' }, pageAccessToken);
         const latestEmail = inbox[0];
