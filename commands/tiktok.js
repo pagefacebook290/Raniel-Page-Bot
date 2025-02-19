@@ -1,12 +1,12 @@
 const axios = require('axios');
- const { sendMessage } = require('../handles/sendMessage');
+const { sendMessage } = require('../handles/handleMessage');
 
 module.exports = {
   name: 'tiktok',
   description: 'Download TikTok video',
   usage: 'tiktok <video link>',
   author: 'raniel',
-  execute: async (senderId, args) => {
+  execute: async (senderId, args, client) => {
     const videoLink = args.join(' ');
     if (!videoLink) {
       return sendMessage(senderId, { text: 'Usage: tiktok <video link>' });
@@ -24,4 +24,3 @@ module.exports = {
     }
   }
 };
-  
