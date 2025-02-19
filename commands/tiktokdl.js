@@ -20,7 +20,15 @@ module.exports = {
       if (!videoUrl) {
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
-      sendMessage(senderId, { text: `Download your TikTok video here: ${videoUrl}` }, pageAccessToken);
+      const message = {
+        attachment: {
+          type: 'video',
+          payload: {
+            url: videoUrl
+          }
+        }
+      };
+      await sendMessage(senderId, message, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
       sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
