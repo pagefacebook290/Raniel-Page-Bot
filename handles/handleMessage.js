@@ -1,6 +1,20 @@
+``
 const fs = require('fs');
 const path = require('path');
-const { sendMessage } = require('./sendMessage');
+const axios = require('axios');
+const PAGE_ACCESS_TOKEN = require('../index').PAGE_ACCESS_TOKEN;
+
+const sendMessage = async (senderId, message) => {
+  try {
+    const response = await axios.post(`https://graph.facebook.com/v21.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
+      recipient: { id: senderId },
+      message,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+};
 
 const commands = new Map();
 const prefix = '-';
@@ -20,9 +34,7 @@ async function handleMessage(event, pageAccessToken) {
   const messageText = event?.message?.text?.trim();
   if (!messageText) return console.log('Received event without message text');
 
-  const [commandName, ...args] = messageText.startsWith(prefix)
-    ? messageText.slice(prefix.length).split(' ')
-    : messageText.split(' ');
+  const [commandName, ...args] = messageText.startsWith(prefix) ? messageText.slice(prefix.length).split(' ') : messageText.split(' ');
 
   try {
     if (commands.has(commandName.toLowerCase())) {
@@ -37,3 +49,4 @@ async function handleMessage(event, pageAccessToken) {
 }
 
 module.exports = { handleMessage };
+
