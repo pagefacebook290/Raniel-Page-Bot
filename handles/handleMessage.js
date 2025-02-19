@@ -1,39 +1,39 @@
-const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const { sendMessage } = require('./sendMessage');
 
-const PAGE_ACCESS_TOKEN = require('../index').PAGE_ACCESS_TOKEN;
+const commands = new Map();
+const prefix = '-';
 
-const sendMessage = async (senderId, message) => {
+// Load command modules
+fs.readdirSync(path.join(__dirname, '../commands'))
+  .filter(file => file.endsWith('.js'))
+  .forEach(file => {
+    const command = require(`../commands/${file}`);
+    commands.set(command.name.toLowerCase(), command);
+  });
+
+async function handleMessage(event, pageAccessToken) {
+  const senderId = event?.sender?.id;
+  if (!senderId) return console.error('Invalid event object');
+
+  const messageText = event?.message?.text?.trim();
+  if (!messageText) return console.log('Received event without message text');
+
+  const [commandName, ...args] = messageText.startsWith(prefix)
+    ? messageText.slice(prefix.length).split(' ')
+    : messageText.split(' ');
+
   try {
-    const response = await axios.post(`https://graph.facebook.com/v21.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
-      recipient: { id: senderId },
-      message,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error sending message:', error);
-  }
-};
-
-module.exports = {
-  handleMessage: async (event, token) => {
-    const { sender, message } = event;
-    const { text } = message;
-
-    if (!text) return;
-
-    const args = text.trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-
-    const commands = require('../commands');
-
-    const commandFile = commands.find((cmd) => cmd.name === command);
-
-    if (!commandFile) return;
-
-    try {
-      await commandFile.execute(sender.id, args, sendMessage);
-    } catch (error) {
-      console.error('Error executing command:', error);
+    if (commands.has(commandName.toLowerCase())) {
+      await commands.get(commandName.toLowerCase()).execute(senderId, args, pageAccessToken, sendMessage);
+    } else {
+      await commands.get('gpt4').execute(senderId, [messageText], pageAccessToken);
     }
-  },
-};
+  } catch (error) {
+    console.error(`Error executing command:`, error);
+    await sendMessage(senderId, { text: error.message || 'There was an error executing that command.' }, pageAccessToken);
+  }
+}
+
+module.exports = { handleMessage };
