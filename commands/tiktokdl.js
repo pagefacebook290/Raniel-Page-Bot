@@ -1,7 +1,4 @@
 const axios = require('axios');
-const { sendMessage } = require('../handles/sendMessage');
-const fs = require('fs');
-const token = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
   name: 'tiktok',
@@ -9,29 +6,20 @@ module.exports = {
   usage: 'tiktok <video link>',
   author: 'raniel',
   execute: async (senderId, args) => {
-    const pageAccessToken = token;
     const videoLink = args.join(' ');
     if (!videoLink) {
-      return sendMessage(senderId, { text: 'Usage: tiktok <video link>' }, pageAccessToken);
+      return sendMessage(senderId, { text: 'Usage: tiktok <video link>' });
     }
     try {
       const response = await axios.get(`https://sandipbaruwal.onrender.com/tikdown?url=${encodeURIComponent(videoLink)}`);
       const videoUrl = response.data;
       if (!videoUrl) {
-        return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
+        return sendMessage(senderId, { text: 'Failed to retrieve video.' });
       }
-      const message = {
-        attachment: {
-          type: 'video',
-          payload: {
-            url: videoUrl
-          }
-        }
-      };
-      await sendMessage(senderId, message, pageAccessToken);
+      sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } });
     } catch (error) {
       console.error('Error:', error.message);
-      sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
+      sendMessage(senderId, { text: 'An error occurred. Try again later.' });
     }
   }
 };
