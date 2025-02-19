@@ -17,12 +17,15 @@ module.exports = {
       if (!videoUrl) {
         return sendMessage(senderId, { text: 'Failed to retrieve video.' }, pageAccessToken);
       }
-      const attachment = {
-        type: 'video',
+      if (attachment) {
+      messagePayload.message.attachment = {
+        type: attachment.type,
         payload: {
-          url: videoUrl
+          url: attachment.payload.url,
+          is_reusable: true
         }
       };
+    }
       sendMessage(senderId, { attachment }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
