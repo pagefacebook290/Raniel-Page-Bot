@@ -15,7 +15,6 @@ const COMMANDS_PATH = path.join(__dirname, 'commands');
 // Webhook verification
 app.get('/webhook', (req, res) => {
   const { 'hub.mode': mode, 'hub.verify_token': token, 'hub.challenge': challenge } = req.query;
-
   if (mode && token) {
     if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       console.log('WEBHOOK_VERIFIED');
@@ -23,14 +22,12 @@ app.get('/webhook', (req, res) => {
     }
     return res.sendStatus(403);
   }
-
   res.sendStatus(400); // Bad request if neither mode nor token are provided
 });
 
 // Webhook event handling
 app.post('/webhook', (req, res) => {
   const { body } = req;
-
   if (body.object === 'page') {
     // Ensure entry and messaging exist before iterating
     body.entry?.forEach(entry => {
@@ -42,10 +39,8 @@ app.post('/webhook', (req, res) => {
         }
       });
     });
-
     return res.status(200).send('EVENT_RECEIVED');
   }
-
   res.sendStatus(404);
 });
 
@@ -55,7 +50,9 @@ const sendMessengerProfileRequest = async (method, url, data = null) => {
     const response = await axios({
       method,
       url: `https://graph.facebook.com/v21.0${url}?access_token=${PAGE_ACCESS_TOKEN}`,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       data
     });
     return response.data;
@@ -79,18 +76,13 @@ const loadCommands = () => {
 // Load or reload Messenger Menu Commands dynamically
 const loadMenuCommands = async (isReload = false) => {
   const commands = loadCommands();
-
   if (isReload) {
     // Delete existing commands if reloading
     await sendMessengerProfileRequest('delete', '/me/messenger_profile', { fields: ['commands'] });
     console.log('Menu commands deleted successfully.');
   }
-
   // Load new or updated commands
-  await sendMessengerProfileRequest('post', '/me/messenger_profile', {
-    commands: [{ locale: 'default', commands }],
-  });
-
+  await sendMessengerProfileRequest('post', '/me/messenger_profile', { commands: [{ locale: 'default', commands }], });
   console.log('Menu commands loaded successfully.');
 };
 
