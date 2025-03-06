@@ -7,7 +7,7 @@ module.exports = {
   name: 'pinayflix',
   description: 'Search for video from PinayFlix',
   usage: 'pinaysearch <search title>',
-  author: 'Rized',
+  author: 'Raniel',
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const searchQuery = args.join(' ');
@@ -29,7 +29,7 @@ module.exports = {
       const videos = data.slice(0, maxVideos);
 
       for (const video of videos) {
-        const message = `${video.title},\n${video.url} Enjoy watching! tigang boy.`;
+        const message = `${video.title} Enjoy watching! tigang boy. \nRod palautog`;
 
         const videoMessage = {
           attachment: {
