@@ -1,33 +1,71 @@
+const express = require('express');
 const axios = require('axios');
-const { sendMessage } = require('../handles/sendMessage');
-const fs = require('fs');
-const token = fs.readFileSync('token.txt', 'utf8');
+const bodyParser = require('body-parser');
 
-module.exports = {
-  name: 'humanize',
-  description: 'Convert text to human voice',
-  usage: 'humanize <text>',
-  author: 'raniel',
-  execute: async (senderId, args) => {
-    const pageAccessToken = token;
-    const text = args.join(' ');
+const app = express();
+app.use(bodyParser.json());
 
-    if (!text) {
-      return sendMessage(senderId, { text: 'Usage: humanizer <text>' }, pageAccessToken);
-    }
+const apiURL = 'https://kaiz-apis.gleeze.com/api/videos';
+const PAGE_ACCESS_TOKEN = `${pageAccesToken}`;
+const VERIFY_TOKEN = 'EAASWcZB00spABO0GifETV7w54cKclqQpmZA952DPBxZBSx1Ap037ZBi10MZCGd1bItARGEnWynzlxAHoOmSUEhPiVbADPmHm9fZBqT2SG3xrI0SDZAwXTBbMCKfn5DXGXYHw0Rd7ZBJP43MApl5RzJ2tL6ZARTbCGDOtJoYPasxAZCwUrJZBSVpSOYxzN78HExh46gTiwZDZD';
 
-    try {
-      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/humanizer?q=${encodeURIComponent(text)}`);
-      const audioUrl = response.data.audioUrl;
-
-      if (!audioUrl) {
-        return sendMessage(senderId, { text: 'Failed to generate audio.' }, pageAccessToken);
-      }
-
-      sendMessage(senderId, { attachment: { type: 'audio', payload: { url: audioUrl } } }, pageAccessToken);
-    } catch (error) {
-      console.error('Error:', error.message);
-      sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
-    }
+app.get('/', (req, res) => {
+  if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === VERIFY_TOKEN) {
+    res.send(req.query['hub.challenge']);
+  } else {
+    res.send('Invalid verify token');
   }
-};
+});
+
+app.post('/', (req, res) => {
+  const messaging = req.body;
+  if (messaging.object === 'page') {
+    messaging.entry.forEach((entry) => {
+      entry.messaging.forEach((event) => {
+        if (event.message && event.message.text) {
+          const text = event.message.text;
+          if (text === 'shoti') {
+            axios.get(apiURL)
+              .then((response) => {
+                const videos = response.data;
+                const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+                const videoURL = randomVideo.video_url;
+                const message = {
+                  text: `Here's a random video: ${videoURL}`,
+                };
+                sendMessage(event.sender.id, message);
+              })
+              .catch((error) => {
+                console.error(error);
+                const message = {
+                  text: 'Error fetching video',
+                };
+                sendMessage(event.sender.id, message);
+              });
+          }
+        }
+      });
+    });
+  }
+  res.status(200).send('OK');
+});
+
+function sendMessage(recipientId, message) {
+  const payload = {
+    recipient: {
+      id: recipientId,
+    },
+    message: message,
+  };
+  axios.post(`https://graph.facebook.com/v13.0/me/messages?access_token=${pageAccesToken}`, payload)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
