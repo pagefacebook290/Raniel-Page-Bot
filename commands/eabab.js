@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const apiURL = 'https://kaiz-apis.gleeze.com/api/videos';
-const PAGE_ACCESS_TOKEN = `${pageAccesToken}`;
+const PAGE_ACCESS_TOKEN = 'EAASWcZB00spABO0GifETV7w54cKclqQpmZA952DPBxZBSx1Ap037ZBi10MZCGd1bItARGEnWynzlxAHoOmSUEhPiVbADPmHm9fZBqT2SG3xrI0SDZAwXTBbMCKfn5DXGXYHw0Rd7ZBJP43MApl5RzJ2tL6ZARTbCGDOtJoYPasxAZCwUrJZBSVpSOYxzN78HExh46gTiwZDZD';
 const VERIFY_TOKEN = 'EAASWcZB00spABO0GifETV7w54cKclqQpmZA952DPBxZBSx1Ap037ZBi10MZCGd1bItARGEnWynzlxAHoOmSUEhPiVbADPmHm9fZBqT2SG3xrI0SDZAwXTBbMCKfn5DXGXYHw0Rd7ZBJP43MApl5RzJ2tL6ZARTbCGDOtJoYPasxAZCwUrJZBSVpSOYxzN78HExh46gTiwZDZD';
 
 app.get('/', (req, res) => {
