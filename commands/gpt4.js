@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://zen-api.up.railway.app/api/gpt4?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`https://betadash-api-swordslush.vercel.app/gpt4?ask=hi${encodeURIComponent(prompt)}`);
 
       const parts = [];
 
