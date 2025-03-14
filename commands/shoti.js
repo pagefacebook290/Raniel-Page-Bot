@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 const fs = require('fs');
-const path = require('path'); // Import the path module for file path manipulation
+const path = require('path'); 
 
 const token = fs.readFileSync('token.txt', 'utf8');
 
@@ -9,7 +9,7 @@ module.exports = {
   name: 'shoti',
   description: 'Fetches a video using the Shoti API, downloads it, and sends it as a video attachment.',
   usage: 'shoti',
-  author: 'Your Name', // Update with your name
+  author: 'Your Name', 
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti';
@@ -18,16 +18,16 @@ module.exports = {
       const { data } = await axios.get(apiUrl);
 
       if (data.status) {
-        const videoUrl = data.videoDownloadLink;
+        const videoUrl = data.video_url; // Assuming the API response has 'video_url'
         const videoTitle = data.title;
-        const tiktokUrl = data.tiktokUrl;
-        const tempFilePath = path.join(__dirname, 'shoti.mp4'); // Get the current directory for the temporary file
+        const tiktokUrl = data.tiktok_url; // Assuming the API response has 'tiktok_url'
+        const tempFilePath = path.join(__dirname, 'shoti.mp4');
 
-        // Download and save the video locally
+        // Download the video
         const response = await axios({
           method: 'get',
           url: videoUrl,
-          responseType: 'stream' // Important for streaming downloads
+          responseType: 'stream' 
         });
 
         const writer = fs.createWriteStream(tempFilePath);
@@ -38,7 +38,7 @@ module.exports = {
           writer.on('error', reject);
         });
 
-        // Send the video as an attachment
+        // Send the video
         await sendMessage(senderId, {
           attachment: {
             type: 'video',
@@ -53,16 +53,14 @@ module.exports = {
           }
         }, pageAccessToken);
 
-        // Send the video title and TikTok URL after the video is sent
+        // Send the video title and TikTok URL
         await sendMessage(senderId, {
-          text: `${videoTitle}\n\n${tiktokUrl}\n\nCredits raniel`
+          text: `${videoTitle}\n\n${tiktokUrl}\n\nCredits: Kenlie`
         }, pageAccessToken);
 
-        // Remove the temporary file after sending
         fs.unlinkSync(tempFilePath);
 
       } else {
-        // No video found message
         sendMessage(senderId, { text: 'Sorry, no video was found.' }, pageAccessToken);
       }
 
