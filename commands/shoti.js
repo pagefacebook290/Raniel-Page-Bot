@@ -12,7 +12,7 @@ module.exports = {
   author: 'Your Name', // Update with your name
   execute: async (senderId, args) => {
     const pageAccessToken = token;
-    const apiUrl = 'https://shoti.kenliejugarap.com/getvideo.php?apikey=shoti-7eb71049889365e4d57c63fcb3e1d5e1bb80a178e4016bb48df704b0ed4f95798cb464105ae55c064bebb5d2470beed4c077a7bcf5f4b9673ecaaef349530bea2375588713cc819677428b042e9d665c85977c68cc';
+    const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti';
 
     try {
       const { data } = await axios.get(apiUrl);
