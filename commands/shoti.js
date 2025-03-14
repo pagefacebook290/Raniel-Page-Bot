@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { sendMessage } = require('../handles/sendMessage'); 
+const { sendMessage } = require('../handles/sendMessage');
 const fs = require('fs');
 const token = fs.readFileSync('token.txt', 'utf8');
 
@@ -10,7 +10,7 @@ module.exports = {
   author: 'Your Name', // Update this with your name
   execute: async (senderId, args) => {
     const pageAccessToken = token;
-    const apiUrl = 'https://kaiz-apis.gleeze.com/?fbclid=IwZXh0bgNhZW0CMTEAAR3bdL2YwwA4TMhf5ZkwEzKgm6sBPUBqmItoSAsYOU56-NgdePHsklCVLo8_aem_42EqSpHVdl5X1quAPFNnyg'; // Your API URL 
+    const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti'; // Your API URL 
 
     try {
       const { data } = await axios.get(apiUrl);
@@ -26,7 +26,7 @@ module.exports = {
         attachment: {
           type: 'video',
           payload: {
-            url: randomVideo.url, // Assuming the API response has a 'url' property for the video 
+            url: randomVideo.video_url, // Assuming the API response has a 'video_url' property
             is_reusable: true
           }
         }
