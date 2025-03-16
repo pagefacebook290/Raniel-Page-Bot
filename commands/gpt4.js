@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/gpt-3.5?q=${encodeURIComponent(prompt)}`);
+      const { data: { response } } = await axios.get(`https://zen-api.up.railway.app/api/gpt4?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
