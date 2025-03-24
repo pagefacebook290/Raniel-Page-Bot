@@ -9,16 +9,20 @@ module.exports = {
     const phonenumber = args[0];
     const message = args.slice(1).join(' ');
 
+    // Validate input
     if (!phonenumber || !message) {
       return sendmessage(senderid, { text: '❌ Usage: freesms <phonenumber> <message>.' }, pageaccesstoken);
     }
 
+    // Notify the user that the request is being processed
     sendmessage(senderid, { text: '⏳ Processing your request to send SMS, please wait...' }, pageaccesstoken);
 
     try {
-      const response = await axios.post('https://haji-mix.up.railway.app/api/lbcsms', {
-        number: phonenumber,
-        message: encodeURIComponent(message) // Correctly encode the message
+      const response = await axios.get('https://haji-mix.up.railway.app/api/lbcsms', {
+        params: {
+          number: phonenumber,
+          message: encodeURIComponent(message) // Fixed typo in function name
+        }
       });
 
       const { status, response: messageresponse } = response.data;
