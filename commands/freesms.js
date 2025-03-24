@@ -16,7 +16,7 @@ module.exports = {
     sendmessage(senderid, { text: '⏳ 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝘆𝗼𝘂𝗿 𝗿𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝘀𝗲𝗻𝗱 𝘀𝗺𝘀, 𝗽𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁...' }, pageaccesstoken);
 
     try {
-      const response = await axios.get('https://wiegines3.vercel.app/api/freesms', {
+      const response = await axios.get('https://haji-mix.up.railway.app/api/lbcsms', {
         params: {
           number: phonenumber,
           message: encodeURIComponent(message)
