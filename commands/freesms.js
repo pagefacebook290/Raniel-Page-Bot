@@ -10,7 +10,7 @@ module.exports = {
     const message = args.slice(1).join(' ');
 
     if (!phonenumber || !message) {
-      return sendmessage(senderid, { text: '❌ 𝗨𝘀𝗮𝗴𝗲: 𝗳𝗿𝗲𝗲𝘀𝗺𝘀 𝗽𝗵𝗼𝗻𝗲 𝗻𝘂𝗺𝗯𝗲𝗿 𝗺𝗲𝘀𝘀𝗮𝗴𝗲' }, pageaccesstoken);
+      return sendmessage(senderid, { text: 'freesms phonenumber message.' }, pageaccesstoken);
     }
 
     sendmessage(senderid, { text: '⏳ 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝘆𝗼𝘂𝗿 𝗿𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝘀𝗲𝗻𝗱 𝘀𝗺𝘀, 𝗽𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁...' }, pageaccesstoken);
