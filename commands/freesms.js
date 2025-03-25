@@ -28,7 +28,7 @@ module.exports = {
 
       const responsetime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', hour12: true });
 
-      if (status) {
+      if(response.data){
         sendmessage(senderid, { 
           text: `𝗠𝗲𝘀𝘀𝗮𝗴𝗲 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘀𝗲𝗻𝘁 ✅ \n\n📬 𝗠𝗲𝘀𝘀𝗮𝗴𝗲: ${messageresponse}\n\n⏰ 𝗔𝘀𝗶𝗮/𝗠𝗮𝗻𝗶𝗹𝗮: ${responsetime}`
         }, pageaccesstoken);
