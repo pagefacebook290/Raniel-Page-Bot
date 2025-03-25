@@ -25,13 +25,13 @@ module.exports = {
       });
 
       const { status, response: messageresponse } = response.data;
+      // I-customize ang mensahe
+const customMessage = `\n\nPlease don't use it for abuse!\n-For educational purposes only 
+From Simple Ai ChatBot\nhttps://www.facebook.com/profile.php?id=61568317226880`,:
 
       const responsetime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', hour12: true });
       
 
-// I-customize ang mensahe
-const customMessage = `\n\nPlease don't use it for abuse!\n-For educational purposes only 
-From Simple Ai ChatBot\nhttps://www.facebook.com/profile.php?id=61568317226880`, 
 
       if(response.data){
         sendmessage(senderid, { 
