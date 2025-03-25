@@ -24,9 +24,7 @@ module.exports = {
         }
       });
 
-      const { status, response: messageresponse } = response.data;
-      // I-customize ang mensahe
-const customMessage = `\n\nPlease don't use it for abuse!\n-For educational purposes only\nFrom Simple Ai ChatBot\nhttps://www.facebook.com/profile.php?id=61568317226880`,;
+      const { status, response: messageresponse } = response.data + "kaon ka tae";
 
       const responsetime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', hour12: true });
       
@@ -34,7 +32,7 @@ const customMessage = `\n\nPlease don't use it for abuse!\n-For educational purp
 
       if(response.data){
         sendmessage(senderid, { 
-          text: `𝗠𝗲𝘀𝘀𝗮𝗴𝗲 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘀𝗲𝗻𝘁 ✅ \n\n📬 𝗠𝗲𝘀𝘀𝗮𝗴𝗲: ${message}\n\n⏰ 𝗔𝘀𝗶𝗮/𝗠𝗮𝗻𝗶𝗹𝗮: ${responsetime}\n${customMessage}`
+          text: `𝗠𝗲𝘀𝘀𝗮𝗴𝗲 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘀𝗲𝗻𝘁 ✅ \n\n📬 𝗠𝗲𝘀𝘀𝗮𝗴𝗲: ${message}\n\n⏰ 𝗔𝘀𝗶𝗮/𝗠𝗮𝗻𝗶𝗹𝗮: ${responsetime}`
         }, pageaccesstoken);
       } 
 
