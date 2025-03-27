@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://api.zetsu.xyz/ai/llama-3-8b?q=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`https://api.zetsu.xyz/api/blackbox?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
