@@ -1,35 +1,101 @@
-const axios = require('axios');
-const { sendMessage } = require('../handles/sendMessage');
+const fs = require("fs");
+const axios = require("axios");
+const path = require("path");
 
 module.exports = {
-  name: 'shoti',
-  description: 'Generate a random video.',
-  author: 'Raniel',
-  async execute(senderId, args, pageAccessToken) {
+  name: "shoti",
+  usage: "shoti",
+  version: "1.0",
+  execute: async ({ api, event }) => {
+    const { threadID, messageID } = event;
     try {
-      const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti';
-      const response = await axios.get(apiUrl);
+      // Set reaction to indicate processing
+      api.setMessageReaction("⏳", messageID, () => {}, true);
 
-      if (response.data && response.data.video_url) {
-        const videoUrl = response.data.video_url;
+      // Fetch random TikTok video
+      const response = await axios.get("https://apis-rho-nine.vercel.app/tikrandom");
+      console.log("📜 API Response:", response.data);
 
-        // Send video attachment only
-        const videoMessage = {
-          attachment: {
-            type: 'video',
-            payload: {
-              url: videoUrl,
-            },
-          },
-        };
-
-        await sendMessage(senderId, videoMessage, pageAccessToken);
-      } else {
-        await sendMessage(senderId, { text: 'No video found. Please try again later.' }, pageAccessToken);
+      if (!response.data || !response.data.playUrl) {
+        api.setMessageReaction("❌", messageID, () => {}, true);
+        return api.sendMessage("⚠️ No video URL received from API.", threadID, messageID);
       }
+
+      const videoUrl = response.data.playUrl;
+      const filePath = path.join(__dirname, "tikrandom.mp4");
+
+      // Download the video
+      const writer = fs.createWriteStream(filePath);
+      const videoResponse = await axios({
+        url: videoUrl,
+        method: "GET",
+        responseType: "stream",
+      });
+      videoResponse.data.pipe(writer);
+
+      writer.on("finish", async () => {
+        api.setMessageReaction("✅", messageID, () => {}, true);
+        const msg = {
+          body: "🎥 Here is a random TikTok video!\n",
+          attachment: fs.createReadStream(filePath),
+        };
+        api.sendMessage(msg, threadID, (err) => {
+          if (err) {
+            console.error("❌ Error sending video:", err);
+            return api.sendMessage("⚠️ Failed to send video.", threadID);
+          }
+          // Delete file after sending
+          fs.unlink(filePath, (unlinkErr) => {
+            if (unlinkErr) console.error("❌ Error deleting file:", unlinkErr);
+          });
+        });
+      });
+
+      writer.on("error", (err) => {
+        console.error("❌ Error downloading video:", err);
+        api.setMessageReaction("❌", messageID, () => {}, true);
+        api.sendMessage("⚠️ Failed to download video.", threadID, messageID);
+      });
     } catch (error) {
-      console.error('Error fetching video:', error.message);
-      await sendMessage(senderId, { text: 'Sorry, there was an error generating the video. Please try again later.' }, pageAccessToken);
+      console.error("❌ Error fetching video:", error);
+      api.setMessageReaction("❌", messageID, () => {}, true);
+      api.sendMessage(`⚠️ Could not fetch the video. Error: ${error.message}`, threadID, messageID);
+    }
+  },
+};
+
+const axios = require("axios");
+const { sendMessage } = require("../handles/sendMessage");
+
+module.exports = {
+  name: "billboard",
+  description: "generates a billboard image based on a prompt",
+  usage: "lexi [prompt]",
+  author: "Gelie",
+  async execute(senderId, args, pageAccessToken) {
+    if (!args || args.length === 0) {
+      await sendMessage(senderId, {
+        text: "you need to provide prompt stupid idiot.",
+      }, pageAccessToken);
+      return;
+    }
+    const prompt = args.join(" ");
+    const apiUrl = `https://api-canvass.vercel.app/billboard?text=${encodeURIComponent(prompt)}`;
+    await sendMessage(senderId, { text: "⌛Sending your damn image, bitch..." }, pageAccessToken);
+    try {
+      await sendMessage(senderId, {
+        attachment: {
+          type: "image",
+          payload: {
+            url: apiUrl,
+          },
+        },
+      }, pageAccessToken);
+    } catch (error) {
+      console.error("Shit, something went wrong. Fucking API screwed up.", error);
+      await sendMessage(senderId, {
+        text: "An error occurred while generating the image. Please try again later.",
+      }, pageAccessToken);
     }
   },
 };
