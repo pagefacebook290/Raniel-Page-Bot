@@ -7,19 +7,18 @@ module.exports = {
   usePrefix: false,
   usage: "shoti",
   version: "1.0",
-  execute: async ({ api, event }) => {
-    const { threadID, messageID } = event;
+  execute: async ({ api, event, pageAccessToken }) => {
     try {
       // Set reaction to indicate processing
-      api.setMessageReaction("⏳", messageID, () => {}, true);
+      api.setMessageReaction("⏳", event.messageID, () => {}, true, pageAccessToken); // Add pageAccessToken
 
       // Fetch random TikTok video
       const response = await axios.get("https://apis-rho-nine.vercel.app/tikrandom");
       console.log("📜 API Response:", response.data);
 
       if (!response.data || !response.data.playUrl) {
-        api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("⚠️ No video URL received from API.", threadID, messageID);
+        api.setMessageReaction("❌", event.messageID, () => {}, true, pageAccessToken); // Add pageAccessToken
+        return api.sendMessage("⚠️ No video URL received from API.", event.senderID, pageAccessToken); // Add pageAccessToken
       }
 
       const videoUrl = response.data.playUrl;
@@ -35,15 +34,15 @@ module.exports = {
       videoResponse.data.pipe(writer);
 
       writer.on("finish", async () => {
-        api.setMessageReaction("✅", messageID, () => {}, true);
+        api.setMessageReaction("✅", event.messageID, () => {}, true, pageAccessToken); // Add pageAccessToken
         const msg = {
           body: "🎥 Here is a random TikTok video!\n",
           attachment: fs.createReadStream(filePath),
         };
-        api.sendMessage(msg, threadID, (err) => {
+        api.sendMessage(msg, event.senderID, pageAccessToken, (err) => { // Add pageAccessToken
           if (err) {
             console.error("❌ Error sending video:", err);
-            return api.sendMessage("⚠️ Failed to send video.", threadID);
+            return api.sendMessage("⚠️ Failed to send video.", event.senderID, pageAccessToken); // Add pageAccessToken
           }
           // Delete file after sending
           fs.unlink(filePath, (unlinkErr) => {
@@ -54,14 +53,13 @@ module.exports = {
 
       writer.on("error", (err) => {
         console.error("❌ Error downloading video:", err);
-        api.setMessageReaction("❌", messageID, () => {}, true);
-        api.sendMessage("⚠️ Failed to download video.", threadID, messageID);
+        api.setMessageReaction("❌", event.messageID, () => {}, true, pageAccessToken); // Add pageAccessToken
+        api.sendMessage("⚠️ Failed to download video.", event.senderID, pageAccessToken); // Add pageAccessToken
       });
     } catch (error) {
       console.error("❌ Error fetching video:", error);
-      api.setMessageReaction("❌", messageID, () => {}, true);
-      api.sendMessage(`⚠️ Could not fetch the video. Error: ${error.message}`, threadID, messageID);
+      api.setMessageReaction("❌", event.messageID, () => {}, true, pageAccessToken); // Add pageAccessToken
+      api.sendMessage(`⚠️ Could not fetch the video. Error: ${error.message}`, event.senderID, pageAccessToken); // Add pageAccessToken
     }
   },
 };
-
