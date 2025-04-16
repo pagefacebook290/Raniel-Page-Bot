@@ -12,7 +12,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://renzweb.onrender.com/api/o1-plus?prompt=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`https://renzweb.onrender.com/api/gemini-1206?prompt=${encodeURIComponent(prompt)}&uid=${senderId}&img=https%3A%2F%2Fwww.thispersondoesnotexist.com%2F`);
 
       const parts = [];
 
