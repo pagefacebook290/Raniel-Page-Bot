@@ -2,18 +2,17 @@ const axios = require('axios');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'gpt5',
+  name: 'gpt3',
   description: 'Interact with GPT-4o',
   usage: 'gpt4 [your message]',
-  author: 'Raniel',
-  
+  author: 'coffee',
 
   async execute(senderId, args, pageAccessToken) {
     const prompt = args.join(' ');
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/zerogpt-ai?ask=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/vondy-ai?ask=${encodeURIComponent(prompt)}`);
 
       const parts = [];
 
