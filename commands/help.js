@@ -27,6 +27,7 @@ module.exports = {
 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝙽𝚊𝚖𝚎: ${command.name}
 𝙳𝚎𝚜𝚌𝚛𝚒𝚋𝚝𝚒𝚘𝚗: ${command.description}
 𝚄𝚜𝚊𝚐𝚎: ${command.usage}
+\n\nAuthor: ${command.author}
 ━━━━━━━━━━━━━━`;
         
         sendMessage(senderId, { text: commandDetails }, pageAccessToken);
