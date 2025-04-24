@@ -6,7 +6,7 @@ module.exports = {
   description: 'Fetch song lyrics',
   usage: 'lyrics [song name]',
   author: 'Raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  
 
   async execute(senderId, args, pageAccessToken) {
     try {

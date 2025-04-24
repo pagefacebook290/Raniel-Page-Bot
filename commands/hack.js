@@ -5,8 +5,8 @@ module.exports = {
   name: 'hack',
   description: 'Generate a hack meme',
   usage: 'hack <name> <uid>',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  author: 'Raniel',
+   
 
   async execute(senderId, args, pageAccessToken) {
     if (!args || !Array.isArray(args) || args.length < 2) {

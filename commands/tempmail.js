@@ -8,7 +8,7 @@ module.exports = {
  name: 'tempmail',
  description: 'Generate temporary email and check inbox',
  usage: '-tempmail gen OR -tempmail inbox',
- author: 'coffee (modified by Kaizenji)',
+ author: 'coffee (modified by Raniel)',
 
  async execute(senderId, args, pageAccessToken) {
    const [cmd] = args;

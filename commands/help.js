@@ -6,8 +6,9 @@ module.exports = {
   name: 'help',
   description: 'Show available commands',
   usage: 'help\nhelp [command name]',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  author: 'Raniel',
+  
+  
   execute(senderId, args, pageAccessToken) {
     const commandsDir = path.join(__dirname, '../commands');
     const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith('.js'));

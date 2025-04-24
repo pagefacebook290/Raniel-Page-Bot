@@ -206,8 +206,8 @@ const { sendMessage } = require('../handles/sendMessage');
   name: 'zodiac',
   description: 'Get information about a zodiac sign',
   usage: 'zodiac [month]',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  author: 'Raniel',
+  
   async execute(senderId, args, pageAccessToken) { if (args.length === 0) {
     return sendMessage(senderId, { text: 'Please provide a month (e.g. "zodiac August")' }, pageAccessToken);
     

@@ -6,7 +6,7 @@ module.exports = {
   description: 'Interact with GPT-4o',
   usage: 'gpt4 [your message]',
   author: 'Raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  
 
   async execute(senderId, args, pageAccessToken) {
     const prompt = args.join(' ');

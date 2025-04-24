@@ -5,9 +5,8 @@ module.exports = {
   name: 'spotify',
   description: 'search and play spotify song.',
   usage: 'spotify [song name]',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
-
+  author: 'Raniel',
+  
   async execute(senderId, args, pageAccessToken) {
     try {
       const { data } = await axios.get(`https://hiroshi-api.onrender.com/tiktok/spotify?search=${encodeURIComponent(args.join(' '))}`);

@@ -5,8 +5,8 @@ module.exports = {
   name: 'spamsms',
   usage: 'spamsms <number> | <count>',
   description: 'Send spam SMS to the specified number.',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  author: 'Raniel',
+  
   async execute(senderId, args, pageAccessToken, sendMessage) {
     if (args.length < 2) {
       return sendMessage(senderId, {

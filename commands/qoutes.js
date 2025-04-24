@@ -6,8 +6,8 @@ module.exports = {
   name: 'quote',
   description: 'Get a random quote',
   usage: 'quote',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  author: 'Raniel',
+  
 
   /**
    * Execute Quote command

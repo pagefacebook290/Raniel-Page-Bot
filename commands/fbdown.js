@@ -7,8 +7,7 @@ module.exports = {
   name: 'fbdown',
   description: 'Download Facebook video',
   usage: 'fbdownloader <video link>',
-  author: 'raniel',
-  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  author: 'Raniel',
   
   execute: async (senderId, args) => {
     const pageAccessToken = token;
