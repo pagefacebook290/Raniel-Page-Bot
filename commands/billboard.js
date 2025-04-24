@@ -5,7 +5,8 @@ module.exports = {
   name: 'billboard', 
   description: 'generates a billboard image based on a prompt',
   usage: 'lexi [prompt]', 
-  author: 'Gelie', 
+  author: 'Raniel', 
+  author = author.charAt(0).toUpperCase()+author.slice(1), 
   
   async execute(senderId, args, pageAccessToken) {
  

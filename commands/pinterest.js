@@ -6,10 +6,10 @@ const tokenPath = './token.txt';
 const pageAccessToken = fs.readFileSync(tokenPath, 'utf8').trim();
 
 module.exports = {
-  name: 'pinterest',
+  name: 'image',
   description: 'Search Pinterest for images.',
-  usage: '-pinterest prompt -number',
-  author: 'coffee',
+  usage: 'image prompt ',
+  author: 'Raniel',
 
   async execute(senderId, args) {
     // Ensure args is defined and is an array, default to an empty string if not

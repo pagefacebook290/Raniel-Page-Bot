@@ -8,6 +8,7 @@ module.exports = {
   description: 'mixes two emojis into one image.', // description 
   usage: 'emojimix <emoji1> <emoji2>', // usage
   author: 'Raniel', // Author of the command
+  author = author.charAt(0).toUpperCase()+author.slice(1), 
 
   // Main function that executes the command
   async execute(senderId, args, pageAccessToken) {

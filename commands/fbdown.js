@@ -8,6 +8,8 @@ module.exports = {
   description: 'Download Facebook video',
   usage: 'fbdownloader <video link>',
   author: 'raniel',
+  author = author.charAt(0).toUpperCase()+author.slice(1), 
+  
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const videoLink = args.join(' ');

@@ -2,6 +2,7 @@ const { sendMessage } = require('../handles/sendMessage');
 
  const zodiacFacts = {
  author:'Raniel' , 
+ author = author.charAt(0).toUpperCase()+author.slice(1), 
   'January': {
     dates: 'January 20 - February 18.', 
     fact: 'Aquarians are known for their innovative, humanitarian, and independent spirit. They value freedom and originality, often thinking outside the box. Their unique perspectives and strong ideals make them natural leaders in social causes.',
@@ -206,6 +207,7 @@ const { sendMessage } = require('../handles/sendMessage');
   description: 'Get information about a zodiac sign',
   usage: 'zodiac [month]',
   author: 'raniel',
+  author = author.charAt(0).toUpperCase()+author.slice(1), 
   async execute(senderId, args, pageAccessToken) { if (args.length === 0) {
     return sendMessage(senderId, { text: 'Please provide a month (e.g. "zodiac August")' }, pageAccessToken);
     

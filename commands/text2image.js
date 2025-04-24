@@ -8,6 +8,7 @@ module.exports = {
   description: 'generates an image based on a prompt',  // Description
   usage: 'text2image [prompt]',  // Usage
   author: 'raniel',  // Author of the command
+  author = author.charAt(0).toUpperCase()+author.slice(1), 
 
   // Main function that executes the command
   async execute(senderId, args, pageAccessToken) {

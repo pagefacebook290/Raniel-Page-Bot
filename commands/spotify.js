@@ -6,6 +6,7 @@ module.exports = {
   description: 'search and play spotify song.',
   usage: 'spotify [song name]',
   author: 'raniel',
+  author = author.charAt(0).toUpperCase()+author.slice(1), 
 
   async execute(senderId, args, pageAccessToken) {
     try {
