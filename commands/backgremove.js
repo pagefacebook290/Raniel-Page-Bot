@@ -1,64 +1,50 @@
 const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
 const { sendMessage } = require('../handles/sendMessage');
 
-// Path to the stored image data
-const imageFilePath = path.join(__dirname, '../data/image.json');
-
 module.exports = {
-  name: 'backgremove',
-  description: 'Remove the background from the user\'s image and send it directly to the user.',
-  usage: 'bgremove',
+  name: 'removebg',
+  description: 'Remove background from an image via URL.',
   author: 'Raniel',
 
   async execute(senderId, args, pageAccessToken) {
-    // Load image data from the JSON file
-    const imageData = JSON.parse(fs.readFileSync(imageFilePath, 'utf8')) || {};
+    try {
+      const imageUrl = args[0];
 
-    // Check if the senderId has an associated image URL
-    if (imageData[senderId]) {
-      const imgUrl = imageData[senderId];
-      try {
-        // Call the background removal API
-        const response = await axios.get(`https://api.kenliejugarap.com/bgremoved/?imgurl=${encodeURIComponent(imgUrl)}`);
-        
-        if (response.data.status) {
-          const processedImageUrl = response.data.response; // Extract the image URL from the response
-
-          // Send the processed image URL as an attachment
-          await sendMessage(senderId, {
-            attachment: {
-              type: 'image',
-              payload: {
-                url: processedImageUrl,
-                is_reusable: true
-              }
-            }
-          }, pageAccessToken);
-
-          console.log(`Sent processed image for user ${senderId}`);
-        } else {
-          await sendMessage(senderId, {
-            text: 'Failed to process the image. Please try again later. ❌'
-          }, pageAccessToken);
-        }
-      } catch (error) {
-        console.error('Error:', error);
+      if (!imageUrl || !imageUrl.startsWith('http')) {
         await sendMessage(senderId, {
-          text: 'An error occurred while processing the image. Please try again later. ⚠️'
+          text: '⚠️ Pakibigay ang tamang image URL.\n\nExample:\nremovebg https://example.com/photo.jpg',
         }, pageAccessToken);
-      } finally {
-        // Remove the entry from image.json after processing
-        delete imageData[senderId];
-        fs.writeFileSync(imageFilePath, JSON.stringify(imageData, null, 2), 'utf8');
-        console.log(`Removed stored image URL for user ${senderId}`);
+        return;
       }
-    } else {
-      // If no image URL is found for the user
+
+      const encodedUrl = encodeURIComponent(imageUrl);
+      const apiUrl = `https://kaiz-apis.gleeze.com/api/removebg?url=${encodedUrl}&stream=false`;
+
+      const response = await axios.get(apiUrl);
+
+      if (response.data && response.data.result) {
+        const outputImage = response.data.result;
+
+        const imageMessage = {
+          attachment: {
+            type: 'image',
+            payload: {
+              url: outputImage,
+            },
+          },
+        };
+
+        await sendMessage(senderId, imageMessage, pageAccessToken);
+      } else {
+        await sendMessage(senderId, {
+          text: '⚠️ Hindi ma-process ang image. Siguraduhing valid ang image URL.',
+        }, pageAccessToken);
+      }
+    } catch (error) {
+      console.error('Error removing background:', error.message);
       await sendMessage(senderId, {
-        text: 'No image found for your ID. Please send an image first before using this command. 📸'
+        text: '⚠️ May error habang tinatanggal ang background. Subukan ulit mamaya.',
       }, pageAccessToken);
     }
-  }
+  },
 };

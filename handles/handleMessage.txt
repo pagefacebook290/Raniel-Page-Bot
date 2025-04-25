@@ -1,4 +1,4 @@
-const fs = require('fs');
+ const fs = require('fs');
 const path = require('path');
 const { sendMessage } = require('./sendMessage');
 
@@ -10,13 +10,7 @@ fs.readdirSync(path.join(__dirname, '../commands'))
   .filter(file => file.endsWith('.js'))
   .forEach(file => {
     const command = require(`../commands/${file}`);
-
-    // Check if command has a valid name property
-    if (command.name && typeof command.name === 'string') {
-      commands.set(command.name.toLowerCase(), command);
-    } else {
-      console.error(`Command in file ${file} does not have a valid 'name' property`);
-    }
+    commands.set(command.name.toLowerCase(), command);
   });
 
 async function handleMessage(event, pageAccessToken) {
@@ -31,18 +25,13 @@ async function handleMessage(event, pageAccessToken) {
     : messageText.split(' ');
 
   try {
-    if (commandName && commands.has(commandName.toLowerCase())) {
+    if (commands.has(commandName.toLowerCase())) {
       await commands.get(commandName.toLowerCase()).execute(senderId, args, pageAccessToken, sendMessage);
     } else {
-      // Default to 'gpt4' command if the command is not found
-      if (commands.has('gpt4')) {
-        await commands.get('gpt4').execute(senderId, [messageText], pageAccessToken);
-      } else {
-        console.error('No default command found (gpt4)');
-      }
+      await commands.get('gpt4').execute(senderId, [messageText], pageAccessToken);
     }
   } catch (error) {
-    console.error('Error executing command:', error);
+    console.error(`Error executing command:`, error);
     await sendMessage(senderId, { text: error.message || 'There was an error executing that command.' }, pageAccessToken);
   }
 }
