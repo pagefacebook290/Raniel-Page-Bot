@@ -1,45 +1,30 @@
-const axios = require('axios');
-const { sendMessage } = require('../handles/sendMessage');
+ const axios = require('axios');
 
 module.exports = {
   name: 'spamsms',
-  usage: 'spamsms <number> | <count>',
-  description: 'Send spam SMS to the specified number.',
+  description: 'Send multiple SMS messages to a number with a interval',
   author: 'Raniel',
-  
   async execute(senderId, args, pageAccessToken, sendMessage) {
-    if (args.length < 2) {
-      return sendMessage(senderId, {
-        text: 'Please provide a phone number and the number of messages to send. Usage: sms <number> | <count>',
-      }, pageAccessToken);
-    }
+    const [phone, count, interval] = args;
 
-    const [phone, count] = args.join(' ').split(' ').map(arg => arg.trim());
-
-    if (!phone || !count || isNaN(count)) {
-      return sendMessage(senderId, {
-        text: 'Invalid input. Please provide a valid phone number and a numeric count. Usage: sms <number>   <count>',
-      }, pageAccessToken);
+    if (!phone || !count || !interval) {
+      sendMessage(senderId, { text: 'Usage: smsbomb [number] [count] [interval]' }, pageAccessToken);
+      return;
     }
 
     try {
-      const apiUrl = `https://kaiz-apis.gleeze.com/api/spamsms?phone=${encodeURIComponent(phone)}&count=${encodeURIComponent(count)}&interval=1`;
+      const apiUrl = `https://kaiz-apis.gleeze.com/api/spamsms?phone=${phone}&count=${count}&interval=${interval}`;
       const response = await axios.get(apiUrl);
-
-      if (response.data.success) {
-        await sendMessage(senderId, {
-          text: `Successfully sent ${count} messages to ${phone}.`,
-        }, pageAccessToken);
+      
+      const { status, success, fail } = response.data;
+      if (status) {
+        sendMessage(senderId, { text: `Successfully sent ${success} SMS messages to ${phone}. ${fail} messages failed.` }, pageAccessToken);
       } else {
-        await sendMessage(senderId, {
-          text: 'Failed to send messages. Please check the phone number and try again.',
-        }, pageAccessToken);
+        sendMessage(senderId, { text: 'Failed to send SMS messages.' }, pageAccessToken);
       }
     } catch (error) {
-      console.error('Error:', error.message);
-      await sendMessage(senderId, {
-        text: 'Sorry, there was an error sending the messages. Please try again later.',
-      }, pageAccessToken);
+      console.error('Error sending SMS messages:', error);
+      sendMessage(senderId, { text: 'Sorry, there was an error processing your request.' }, pageAccessToken);
     }
-  },
+  }
 };

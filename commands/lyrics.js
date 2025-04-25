@@ -3,28 +3,45 @@ const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'lyrics',
-  description: 'Fetch song lyrics',
-  usage: 'lyrics [song name]',
+  description: 'Get song lyrics by title.',
   author: 'Raniel',
-  
 
   async execute(senderId, args, pageAccessToken) {
     try {
-      const { data: { result } } = await axios.get(`https://kaiz-apis.gleeze.com/api/lyrics?title=${encodeURIComponent(args.join(' '))}`);
-      if (result?.lyrics) {
-        const messages = splitMessage(result.title, result.artist, result.lyrics, 2000);
-        messages.forEach(message => sendMessage(senderId, { text: message }, pageAccessToken));
-        if (result.image) sendMessage(senderId, { attachment: { type: 'image', payload: { url: result.image, is_reusable: true } } }, pageAccessToken);
-      } else {
-        sendMessage(senderId, { text: 'Sorry, no lyrics were found for your query.' }, pageAccessToken);
-      }
-    } catch {
-      sendMessage(senderId, { text: 'Sorry, there was an error processing your request.' }, pageAccessToken);
-    }
-  }
-};
+      const title = args.join(' ');
 
-const splitMessage = (title, artist, lyrics, chunkSize) => {
-  const message = `Title: ${title}\nArtist: ${artist}\n\n${lyrics}`;
-  return Array.from({ length: Math.ceil(message.length / chunkSize) }, (_, i) => message.slice(i * chunkSize, (i + 1) * chunkSize));
+      if (!title) {
+        await sendMessage(senderId, {
+          text: '⚠️ Pakibigay ang title ng kanta.\n\nExample:\nlyrics apt',
+        }, pageAccessToken);
+        return;
+      }
+
+      const encodedTitle = encodeURIComponent(title);
+      const apiUrl = `https://kaiz-apis.gleeze.com/api/lyrics?title=${encodedTitle}`;
+
+      const response = await axios.get(apiUrl);
+
+      if (response.data && response.data.result && response.data.result.lyrics) {
+        const { title: songTitle, artist, lyrics } = response.data.result;
+
+        const message = `🎵 *${songTitle}* by *${artist}*\n\n${lyrics}`;
+
+        // Handle long lyrics (Messenger limit ~2000 chars per message)
+        const chunks = message.match(/[\s\S]{1,1900}/g);
+        for (const chunk of chunks) {
+          await sendMessage(senderId, { text: chunk }, pageAccessToken);
+        }
+      } else {
+        await sendMessage(senderId, {
+          text: '⚠️ Walang nahanap na lyrics. Subukan ibang title.',
+        }, pageAccessToken);
+      }
+    } catch (error) {
+      console.error('Error fetching lyrics:', error.message);
+      await sendMessage(senderId, {
+        text: '⚠️ May error habang kinukuha ang lyrics. Subukan ulit mamaya.',
+      }, pageAccessToken);
+    }
+  },
 };
