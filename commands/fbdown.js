@@ -6,7 +6,7 @@ const token = fs.readFileSync('token.txt', 'utf8');
 module.exports = {
   name: 'fbdown',
   description: 'Download Facebook video',
-  usage: 'fbdownloader <video link>',
+  usage: 'fbdown <video link>',
   author: 'Raniel',
   
   execute: async (senderId, args) => {
@@ -14,7 +14,7 @@ module.exports = {
     const videoLink = args.join(' ');
 
     if (!videoLink) {
-      return sendMessage(senderId, { text: 'Usage: fbdownloader <video link>' }, pageAccessToken);
+      return sendMessage(senderId, { text: 'Usage: fbdown <video link>' }, pageAccessToken);
     }
 
     try {
