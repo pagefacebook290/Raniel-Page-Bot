@@ -13,7 +13,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/aria?ask=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/codestral-latest?q=${encodeURIComponent(prompt)}&uid=${senderId}`);
 
       const parts = [];
 
