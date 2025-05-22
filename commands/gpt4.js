@@ -13,7 +13,7 @@ module.exports = {
     if (!prompt) return sendMessage(senderId, { text: "Usage: gpt4 <question>" }, pageAccessToken);
 
     try {
-      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/o3-mini?ask=${encodeURIComponent(prompt)}&uid=${senderId}`);
+      const { data: { response } } = await axios.get(`https://kaiz-apis.gleeze.com/api/llama3-turbo?ask=${encodeURIComponent(prompt)}&uid=${senderId}&apikey=3be7c751-a15e-4ff7-8896-72cfdfc811ac`);
 
       const parts = [];
 
