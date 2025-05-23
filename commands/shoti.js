@@ -5,7 +5,7 @@ module.exports = {
   description: 'Get a Shoti video',
   author: 'Cliff & John lib',
   async execute(senderId, args, pageAccessToken, sendMessage) {
-    const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti';
+    const apiUrl = 'https://kaiz-apis.gleeze.com/api/shoti?apikey=1301192b-ce75-4de8-a8ff-6457ba456f78';
 
     try {
       const response = await axios.get(apiUrl);

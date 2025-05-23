@@ -22,7 +22,7 @@ module.exports = {
 
     // Concatenate arguments to form the prompt
     const prompt = args.join(' ');
-    const apiUrl = `https://kaiz-apis.gleeze.com/api/text2image?prompt=${encodeURIComponent(prompt)}`;  // API endpoint with the prompt
+    const apiUrl = `https://kaiz-apis.gleeze.com/api/text2image?prompt=${encodeURIComponent(prompt)}&apikey=1301192b-ce75-4de8-a8ff-6457ba456f78`;  // API endpoint with the prompt
 
     // Notify user that the image is being generated
     await sendMessage(senderId, { text: '⌛ 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗶𝗻𝗴 𝗶𝗺𝗮𝗴𝗲 𝗯𝗮𝘀𝗲𝗱 𝗼𝗻 𝘆𝗼𝘂𝗿 𝗽𝗿𝗼𝗺𝗽𝘁, 𝗽𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁...' }, pageAccessToken);
