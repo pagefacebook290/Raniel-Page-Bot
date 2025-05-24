@@ -18,7 +18,7 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/fbdl?url=${encodeURIComponent(videoLink)}&apikey=1301192b-ce75-4de8-a8ff-6457ba456f78`);
+      const response = await axios.get(`https://kaiz-apis.gleeze.com/api/fbdl?url=${encodeURIComponent(videoLink)}&apikey=72f8161d-50d4-4177-a3b4-bd6891de70ef`);
       const videoData = response.data;
       const videoUrl = videoData.videoUrl;
 

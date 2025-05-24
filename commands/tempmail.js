@@ -2,7 +2,7 @@
 const axios = require("axios");
 const { sendMessage } = require("../handles/sendMessage");
 
-const API_KEY = "&apikey=1301192b-ce75-4de8-a8ff-6457ba456f78";
+const API_KEY = "72f8161d-50d4-4177-a3b4-bd6891de70ef";
 const BASE_URL = "https://kaiz-apis.gleeze.com/api";
 
 module.exports = {

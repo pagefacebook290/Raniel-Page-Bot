@@ -14,7 +14,7 @@ module.exports = {
     }
 
     try {
-      const apiKey = '2a5a2264d2ee4f0b847cb8bd809ed34bc3309be7';
+      const apiKey = '72f8161d-50d4-4177-a3b4-bd6891de70ef';
       const apiUrl = `https://simsimi.ooguy.com/sim?query=${encodeURIComponent(query)}&apikey=${apiKey}`;
       const { data } = await axios.get(apiUrl);
 
