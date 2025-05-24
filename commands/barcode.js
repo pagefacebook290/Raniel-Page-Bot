@@ -1,5 +1,3 @@
-const axios = require('axios');
-const FormData = require('form-data');
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
@@ -18,48 +16,25 @@ module.exports = {
     }
 
     try {
-      // Generate barcode image as PNG buffer
+      // Generate barcode image URL
       const barcodeUrl = `https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(text)}&scale=3&includetext=true`;
 
-      const response = await axios.get(barcodeUrl, {
-        responseType: 'arraybuffer',
-      });
-
-      // Upload barcode image to Facebook to get attachment_id
-      const form = new FormData();
-      form.append('message', JSON.stringify({
-        attachment: {
-          type: 'image',
-          payload: { is_reusable: true },
-        },
-      }));
-      form.append('filedata', Buffer.from(response.data), {
-        filename: 'barcode.png',
-        contentType: 'image/png',
-      });
-
-      const uploadRes = await axios.post(
-        `https://graph.facebook.com/v19.0/me/message_attachments?access_token=${pageAccessToken}`,
-        form,
-        { headers: form.getHeaders() }
-      );
-
-      const attachmentId = uploadRes.data.attachment_id;
-
-      // Send image using attachment ID
+      // Send the barcode as image via direct URL
       await sendMessage(senderId, {
         attachment: {
           type: 'image',
           payload: {
-            attachment_id: attachmentId,
-          },
-        },
+            url: barcodeUrl,
+            is_reusable: true
+          }
+        }
       }, pageAccessToken);
+
     } catch (error) {
-      console.error('Barcode Error:', error.response?.data || error.message);
+      console.error('Barcode Generator Error:', error.message);
       await sendMessage(senderId, {
-        text: 'Failed to generate barcode. Please try again. oten',
+        text: 'Failed to generate barcode. Please try again later.',
       }, pageAccessToken);
     }
-  },
+  }
 };
