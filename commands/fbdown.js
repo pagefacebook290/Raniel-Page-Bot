@@ -29,7 +29,7 @@ module.exports = {
       sendMessage(senderId, { attachment: { type: 'video', payload: { url: videoUrl } } }, pageAccessToken);
     } catch (error) {
       console.error('Error:', error.message);
-      sendMessage(senderId, { text: 'An error occurred. Try again later.' }, pageAccessToken);
+      sendMessage(senderId, { text: 'An error occurred, Failed to retrieve video.' }, pageAccessToken);
     }
   }
 };
