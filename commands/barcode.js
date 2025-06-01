@@ -1,9 +1,9 @@
 const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
-  name: 'barcodegen',
+  name: 'barcode',
   description: 'Generate a barcode from text (Code128)',
-  usage: 'barcodegen <text>',
+  usage: 'barcode <text>',
   author: 'Raniel',
 
   async execute(senderId, args, pageAccessToken) {

@@ -6,14 +6,14 @@ const token = fs.readFileSync('token.txt', 'utf8');
 module.exports = {
   name: 'pinayflix',
   description: 'Search for video from PinayFlix',
-  usage: 'pinaysearch <search title>',
+  usage: 'pinayflix <search title>',
   author: 'Raniel',
   execute: async (senderId, args) => {
     const pageAccessToken = token;
     const searchQuery = args.join(' ');
 
     if (!searchQuery) {
-      return sendMessage(senderId, { text: '❌ Usage: pinaysearch <title>' }, pageAccessToken);
+      return sendMessage(senderId, { text: '❌ Usage: pinayflix <title>' }, pageAccessToken);
     }
 
     const apiUrl = `http://sgp1.hmvhostings.com:25743/pinay?search=${encodeURIComponent(searchQuery)}&page=1`;
