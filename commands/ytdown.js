@@ -16,14 +16,14 @@ const apiKeys = [
 const getRandomKey = () => apiKeys[Math.floor(Math.random() * apiKeys.length)];
 
 module.exports = {
-  name: 'snapdown',
-  description: 'Download videos using links from Snapchat videos.',
-  usage: 'snapdown [link]',
+  name: 'ytdown',
+  description: 'Download videos using links from short YouTube videos',
+  usage: 'ytdown [link]',
   author: 'coffee',
 
   async execute(senderId, args, pageAccessToken) {
     const url = args.join(' ').trim();
-    if (!url) return sendMessage(senderId, { text: `Usage: snapdown [link]` }, pageAccessToken);
+    if (!url) return sendMessage(senderId, { text: `Usage: ytdown [link]` }, pageAccessToken);
 
     let response;
     let attempts = 0;
