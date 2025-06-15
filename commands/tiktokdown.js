@@ -16,7 +16,7 @@ const apiKeys = [
 const getRandomKey = () => apiKeys[Math.floor(Math.random() * apiKeys.length)];
 
 module.exports = {
-  name: 'tiktocdown',
+  name: 'tiktokdown',
   description: 'Download videos using links from TikTok. ',
   usage: 'tiktokdown [link]',
   author: 'coffee',
