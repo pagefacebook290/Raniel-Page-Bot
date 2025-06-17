@@ -50,7 +50,7 @@ ${commands.join('\n')}
 ╰─━━━━━━━━━╾─╯
 Chat -help [name] 
 to see command details.
-━━━━━━━━━━━━━━\n\n━━━━━━━━━━━━━━━━━━\nThis Ai is made by ICT students in Pau Excellencia Global Academy Foundation, Inc.(Pegafi)\n━━━━━━━━━━━━━━━━━━\nAdmin Link: https://www.facebook.com/100092248658233/`;
+━━━━━━━━━━━━━━\n\n━━━━━━━━━━━━━━━━━━\nThis Ai is made by ICT students in Pau Excellencia Global Academy Foundation, Inc.(Pegafi)\n━━━━━━━━━━━━━━━━━━\nAdmin Link: https://www.facebook.com/RanielHiyanBigdick`;
 
     sendMessage(senderId, { text: helpMessage }, pageAccessToken);
   }
