@@ -1,4 +1,3 @@
-
 const { sendMessage } = require("../handles/sendMessage");
 const axios = require("axios");
 
@@ -73,6 +72,7 @@ function addEmoji(name) {
     "Common Egg": "🥚",
     "Uncommon Egg": "🐣",
     "Rare Egg": "🍳",
+    "Paradise Egg": "🍳",
     "Legendary Egg": "🪺",
     "Mythical Egg": "🔮",
     "Bug Egg": "🪲",
@@ -96,20 +96,17 @@ function addEmoji(name) {
     "Corn": "🌽",
     "Daffodil": "🌼",
     "Watermelon": "🍉",
-    "Pumpkin": "🎃",
-    "Apple": "🍎",
-    "Bamboo": "🎍",
-    "Coconut": "🥥",
-    "Cactus": "🌵",
-    "Dragon Fruit": "🍈",
-    "Mango": "🥭",
-    "Grape": "🍇",
-    "Mushroom": "🍄",
-    "Pepper": "🌶️",
-    "Cacao": "🍫",
-    "Beanstalk": "🌱",
-    "Ember Lily": "🏵️",
-    "Sugar Apple": "🍏"
+    "Cauliflower": "🥦",
+    "Avocado": "🥑",
+    "Green Apple": "🍏",
+    "Kiwi": "🥝",
+    "Pineapple": "🍍",
+    "Prickly Pear": "🌵",
+    "Bell Paper": "🫑",
+    "Feljoa": "🍈",
+    "Loquat": "🍋",
+    "Sugar Apple": "🍏",
+    "Banana": "🍌",
   };
   return `${emojis[name] || ""} ${name}`;
 }
