@@ -70,9 +70,10 @@ function formatValue(val) {
 function addEmoji(name) {
   const emojis = {
     "Common Egg": "🥚",
+    "Common Summer Egg": "🐣",
     "Uncommon Egg": "🐣",
     "Rare Egg": "🍳",
-    "Paradise Egg": "🍳",
+    "Paradise Egg": "�",
     "Legendary Egg": "🪺",
     "Mythical Egg": "🔮",
     "Bug Egg": "🪲",
@@ -102,8 +103,8 @@ function addEmoji(name) {
     "Kiwi": "🥝",
     "Pineapple": "🍍",
     "Prickly Pear": "🌵",
-    "Bell Paper": "🫑",
-    "Feljoa": "🍈",
+    "Bell Pepper": "🫑",
+    "Feijoa": "🍈",
     "Loquat": "🍋",
     "Sugar Apple": "🍏",
     "Banana": "🍌",
@@ -223,7 +224,7 @@ module.exports = {
         addSection("🌱 𝗦𝗲𝗲𝗱𝘀", stockData.seedsStock, restocks.seed);
         addSection("🥚 𝗘𝗴𝗴𝘀", stockData.eggStock, restocks.egg);
         addSection("🎨 𝗖𝗼𝘀𝗺𝗲𝘁𝗶𝗰𝘀", stockData.cosmeticsStock, restocks.cosmetics);
-        addSection("🍯 𝗛𝗼𝗻𝗲𝘆", stockData.honeyStock, restocks.honey);
+        /*addSection("🍯 𝗛𝗼𝗻𝗲𝘆", stockData.honeyStock, restocks.honey);*/
 
         const currentKey = JSON.stringify({
           gearStock: stockData.gearStock,
