@@ -16,7 +16,7 @@ const apiKeys = [
 const getRandomKey = () => apiKeys[Math.floor(Math.random() * apiKeys.length)];
 
 module.exports = {
-  name: 'snapdown',
+  name: 'alldown',
   description: 'Download videos using links from Snapchat videos.',
   usage: 'snapdown [link]',
   author: 'coffee',
