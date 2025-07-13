@@ -3,36 +3,31 @@ const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'gemini',
-  description: 'Analyze an image using Gemini AI',
-  usage: 'gemini <prompt> (must reply to an image)',
+  description: 'Analyze an image using Google Gemini Vision API',
+  usage: 'gemini [your prompt] (must reply to an image)',
   author: 'Raniel',
 
   async execute(senderId, args, pageAccessToken, messageEvent) {
-    // User prompt after "gemini"
-    const prompt = args.join(' ') || "Describe this image.";
+    const prompt = args.join(' ') || 'Describe this image in detail.';
 
-    // Check if user replied to a message
-    const repliedMessage = messageEvent?.message?.reply_to?.message;
-    const imageAttachment = repliedMessage?.attachments?.find(att => att.type === 'image');
+    // Check if command is replying to a message with an image
+    const replied = messageEvent?.message?.reply_to?.message;
+    const image = replied?.attachments?.find(a => a.type === 'image');
 
-    if (!imageAttachment) {
-      return await sendMessage(senderId, {
-        text: '❎ | Please reply to an image and provide a prompt.\n\nExample:\nReply to a photo with:\n`gemini what is inside the image`',
+    if (!image) {
+      return sendMessage(senderId, {
+        text: '❎ | Please reply to an image and include your prompt.\n\nExample:\nReply to a photo and type:\n`gemini what is happening in this image?`',
       }, pageAccessToken);
     }
 
-    const imageUrl = imageAttachment.payload.url;
+    const imageUrl = image.payload.url;
 
     try {
-      // Convert image to base64
       const base64Image = await getBase64FromUrl(imageUrl);
 
-      // 🔐 Your Gemini API Key
-      const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
-
-      // Call Gemini Vision API
-      const geminiRes = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${GEMINI_API_KEY}`,
+      const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // Replace this
+      const response = await axios.post(
+        `https://generativelanguage.googleapis.com/v1/models/gemini-pro-vision:generateContent?key=${GEMINI_API_KEY}`,
         {
           contents: [
             {
@@ -40,7 +35,7 @@ module.exports = {
                 { text: prompt },
                 {
                   inline_data: {
-                    mime_type: "image/jpeg",
+                    mime_type: 'image/jpeg',
                     data: base64Image
                   }
                 }
@@ -50,28 +45,25 @@ module.exports = {
         }
       );
 
-      const reply = geminiRes.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const geminiReply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-      if (reply) {
-        await sendMessage(senderId, {
-          text: `🧠 Gemini says:\n\n${reply}`,
-        }, pageAccessToken);
+      if (geminiReply) {
+        await sendMessage(senderId, { text: `📷 Gemini:\n\n${geminiReply}` }, pageAccessToken);
       } else {
-        await sendMessage(senderId, {
-          text: "⚠️ Gemini didn't return any response.",
-        }, pageAccessToken);
+        await sendMessage(senderId, { text: '⚠️ Gemini did not return any response.' }, pageAccessToken);
       }
+
     } catch (err) {
-      console.error('Gemini error:', err.message);
+      console.error('Gemini Vision Error:', err.message);
       await sendMessage(senderId, {
-        text: '⚠️ Something went wrong while analyzing the image.',
+        text: '⚠️ An error occurred while analyzing the image.',
       }, pageAccessToken);
     }
   }
 };
 
-// Convert image URL to base64 string
+// Helper to fetch image and convert to base64
 async function getBase64FromUrl(url) {
-  const response = await axios.get(url, { responseType: 'arraybuffer' });
-  return Buffer.from(response.data, 'binary').toString('base64');
+  const res = await axios.get(url, { responseType: 'arraybuffer' });
+  return Buffer.from(res.data, 'binary').toString('base64');
 }
