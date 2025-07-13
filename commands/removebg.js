@@ -10,7 +10,8 @@ const apiKeys = [
   "s1NPvP5zJpaL1msj7TCDhFmS",
   "fm7tXaPLSCyKApyBaCNPc99Z",
   "pEvqRAZLuBR1Wqqv66Rrqzwk",
-  "84utdcBzF6Pbi8MVMZbdFSjW"
+  "84utdcBzF6Pbi8MVMZbdFSjW",
+  "8c0a049d-29a8-474a-b15e-189e42e150fb"
 ];
 
 const getImageUrl = async (event, token) => {
