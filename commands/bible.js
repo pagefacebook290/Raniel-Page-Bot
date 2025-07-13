@@ -16,9 +16,9 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get('https://kaiz-apis.gleeze.com/api/bible', {
+      const response = await axios.get('https://kaiz-apis.gleeze.com/api/bible?', {
         params: {
-          apikey: '72f8161d-50d4-4177-a3b4-bd6891de70ef',
+          apikey: '8c0a049d-29a8-474a-b15e-189e42e150fb',
           search: query
         }
       });
