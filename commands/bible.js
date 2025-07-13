@@ -10,7 +10,7 @@ module.exports = {
   async execute(senderId, args, pageAccessToken) {
     const query = args.join(' ');
 
-    // Fallback list of known good verses
+    
     const randomVerses = [
       "John 3:16",
       "Psalm 23:1",
@@ -32,7 +32,7 @@ module.exports = {
 
       if (data && data.text) {
         await sendMessage(senderId, {
-          text: `📖 *${data.reference}*\n\n${data.text.trim()}`,
+          text: `📖 ${data.reference}\n\n${data.text.trim()}`,
         }, pageAccessToken);
       } else {
         await sendMessage(senderId, {
