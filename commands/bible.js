@@ -10,7 +10,7 @@ module.exports = {
   async execute(senderId, args, pageAccessToken) {
     const query = args.join(' ');
 
-    // Fallback list of known verses
+    // Fallback list of known good verses
     const randomVerses = [
       "John 3:16",
       "Psalm 23:1",
@@ -24,32 +24,25 @@ module.exports = {
       "1 Corinthians 13:4-5",
     ];
 
-    // If no user input, randomly select a verse from the list
     const searchQuery = query || randomVerses[Math.floor(Math.random() * randomVerses.length)];
 
     try {
-      const response = await axios.get('https://kaiz-apis.gleeze.com/api/bible', {
-        params: {
-          apikey: '8c0a049d-29a8-474a-b15e-189e42e150fb',
-          search: searchQuery,
-        }
-      });
-
+      const response = await axios.get(`https://bible-api.com/${encodeURIComponent(searchQuery)}`);
       const data = response.data;
 
-      if (data && data.result && data.result.text) {
+      if (data && data.text) {
         await sendMessage(senderId, {
-          text: `📖 *${data.result.reference}*\n\n${data.result.text}`,
+          text: `📖 *${data.reference}*\n\n${data.text.trim()}`,
         }, pageAccessToken);
       } else {
         await sendMessage(senderId, {
-          text: `❌ oten No verse found. You searched: "${searchQuery}". oten Please check the input or try again.`,
+          text: `❌ No verse found. You searched: "${searchQuery}". Please check the input or try again.`,
         }, pageAccessToken);
       }
     } catch (error) {
       console.error('Bible API error:', error.message);
       await sendMessage(senderId, {
-        text: "⚠️ oten An error occurred while fetching the verse. Please try again later.",
+        text: "⚠️ An error occurred while fetching the verse. Please try again later.",
       }, pageAccessToken);
     }
   }
