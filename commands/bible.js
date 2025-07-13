@@ -15,7 +15,7 @@ module.exports = {
         apikey: '8c0a049d-29a8-474a-b15e-189e42e150fb',
       };
 
-      // If user provides a search query, include it in params
+      // Include search if user provided a query
       if (query) {
         params.search = query;
       }
@@ -23,13 +23,13 @@ module.exports = {
       const response = await axios.get('https://kaiz-apis.gleeze.com/api/bible', { params });
       const data = response.data;
 
-      if (data && data.result) {
+      if (data && data.result && data.result.text) {
         await sendMessage(senderId, {
           text: `📖 *${data.result.reference}*\n\n${data.result.text}`,
         }, pageAccessToken);
       } else {
         await sendMessage(senderId, {
-          text: "❌ No verse found. Please check your input and try again.",
+          text: `❌ No verse found. You searched: "${query || 'random'}". Please check the input or try again.`,
         }, pageAccessToken);
       }
     } catch (error) {
