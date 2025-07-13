@@ -3,26 +3,24 @@ const { sendMessage } = require('../handles/sendMessage');
 
 module.exports = {
   name: 'bible',
-  description: 'Search Bible verses or passages',
-  usage: 'bible [verse or passage]',
+  description: 'Get a random Bible verse or search by reference',
+  usage: 'bible [book chapter:verse]',
   author: 'Raniel',
 
   async execute(senderId, args, pageAccessToken) {
     const query = args.join(' ');
-    if (!query) {
-      return sendMessage(senderId, {
-        text: "Usage: bible <book chapter:verse>\n\nExample: bible John 3:16",
-      }, pageAccessToken);
-    }
 
     try {
-      const response = await axios.get('https://kaiz-apis.gleeze.com/api/bible?', {
-        params: {
-          apikey: '8c0a049d-29a8-474a-b15e-189e42e150fb',
-          search: query
-        }
-      });
+      const params = {
+        apikey: '8c0a049d-29a8-474a-b15e-189e42e150fb',
+      };
 
+      // If user provides a search query, include it in params
+      if (query) {
+        params.search = query;
+      }
+
+      const response = await axios.get('https://kaiz-apis.gleeze.com/api/bible', { params });
       const data = response.data;
 
       if (data && data.result) {
