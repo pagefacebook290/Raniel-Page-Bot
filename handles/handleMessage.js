@@ -14,11 +14,11 @@ for (const file of commandFiles) {
 async function handleMessage(event, pageAccessToken) {
   const senderId = event.sender.id;
   const messageText = event.message.text.trim();
-  
+
   if (messageText.startsWith(prefix)) {
     const args = messageText.slice(prefix.length).split(' ');
     const commandName = args.shift().toLowerCase();
-    
+
     if (commands.has(commandName)) {
       const command = commands.get(commandName);
       try {
@@ -30,8 +30,8 @@ async function handleMessage(event, pageAccessToken) {
     }
     return;
   }
-  
-  const aiCommand = commands.get('gpt4');
+
+  const aiCommand = commands.get('ai');
   if (aiCommand) {
     try {
       await aiCommand.execute(senderId, messageText, pageAccessToken, sendMessage);
@@ -42,4 +42,4 @@ async function handleMessage(event, pageAccessToken) {
   }
 }
 
-module.exports = { handleMessage }; // Closing the object here
+module.exports = { handleMessage }; // Closing the object herei
